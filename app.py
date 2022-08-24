@@ -21,7 +21,7 @@ mysql_psw = os.environ.get('my_thing')
 # app config stuff
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{mysql_psw}@localhost:3306/members'
 app.config['SQLALCHEMY_BINDS'] = {
-    'admin_info': 'mysql+pymysql://root:passw0rd0098@localhost:3306/admin_info',
+    'admin_info': f'mysql+pymysql://root:{mysql_psw}@localhost:3306/admin_info',
 }
 
 # secret key for form
