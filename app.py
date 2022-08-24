@@ -8,7 +8,7 @@ import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
-from wtforms.validators import DataRequired, EqualTo, Length
+from wtforms.validators import DataRequired, EqualTo, Length, InputRequired
 
 
 app = Flask(__name__)
@@ -34,13 +34,11 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 # create register form class
 class RegisterForm(FlaskForm):
-    full_name = StringField("Full Name:", validators=[DataRequired()], render_kw={"placeholder": "Enter Full Name:"})
-    address = StringField("Address:", validators=[DataRequired()], render_kw={"placeholder": "Enter Address:"})
-    DOB = StringField("Date Of Birth:", validators=[DataRequired()], render_kw={"placeholder": "Enter Date Of Birth:"})
-    email = StringField("Email:", validators=[DataRequired()], render_kw={"placeholder": "Enter Email:"})
+    full_name = StringField("Full Name:", validators=[InputRequired()], render_kw={"placeholder": "Enter Full Name:"})
+    # address = StringField("Address:", validators=[DataRequired()], render_kw={"placeholder": "Enter Address:"})
+    # DOB = StringField("Date Of Birth:", validators=[DataRequired()], render_kw={"placeholder": "Enter Date Of Birth:"})
+    # email = StringField("Email:", validators=[DataRequired()], render_kw={"placeholder": "Enter Email:"})
     # password_hash = PasswordField("Password:", validators=[DataRequired(), validators.EqualTo('password_confirm', message="Passwords Must Match")], render_kw={"placeholder": "Enter Password:"})
-    password = PasswordField('New Password', [validators.DataRequired(), validators.EqualTo('confirm', message='Passwords must match')])
-    confirm = PasswordField('Repeat Password')
     # password_confirm = PasswordField("Confirm Password:", render_kw={"placeholder": "Confirm Password:"})
     register = SubmitField("Register")
 
@@ -73,8 +71,8 @@ class Members(db.Model):
         return check_password_hash(self.password_hash, password)
 
     # Create a method to return a string when we add something
-    def __repr__(self):
-        return '<Name %r>' % self.id
+    # def __repr__(self):
+    #     return '<Name %r>' % self.id
 
 
 
@@ -226,12 +224,10 @@ def user_login():
 
 @app.route('/sign_upp_example.html', methods=['POST', 'GET'])
 def sign_upp_example():
-    name = None
     form = RegisterForm(request.form)
     
-    if request.method == "POST" and form.validate():
-        
-
+    # if request.method == "POST" and form.validate():
+    if form.validate_on_submit():
 
         full_name = request.form['full_name']
         address = request.form['address']
@@ -247,12 +243,7 @@ def sign_upp_example():
             return render_template('sign_upp_success.html')
         except:
             return render_template('sign_upp_failed.html')
-    else:
-        return render_template('sign_upp.html')
+        else:
+            return render_template('sign_upp.html')
 
     return render_template('sign_upp_example.html', form=form)
-
-
-    if request.method == 'POST' and form.validate():
-        user = User(form.username.data, form.email.data,
-                    form.password.data)
