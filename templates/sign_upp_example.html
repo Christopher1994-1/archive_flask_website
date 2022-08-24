@@ -69,16 +69,16 @@
       {{ form.full_name(name="full_name") }}
 
       <b>{{ form.address.label}}</b>
-      {{ form.address() }}
+      {{ form.address(name="address") }}
 
       <b>{{ form.DOB.label}}</b>
-      {{ form.DOB() }}
+      {{ form.DOB(name="dob") }}
 
       <b>{{ form.email.label}}</b>
-      {{ form.email() }}
+      {{ form.email(name="email") }}
 
       <b>{{ form.password.label}}</b>
-      {{ form.password() }}
+      {{ form.password(name="psw") }}
 
       <br>
       {{ form.register(class="registerbtn") }}
