@@ -1,12 +1,14 @@
 # from crypt import methods
+from email import message
 from urllib import request
+from wsgiref.validate import validator
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
+from wtforms.validators import DataRequired, EqualTo, Length
 
 
 app = Flask(__name__)
@@ -36,8 +38,10 @@ class RegisterForm(FlaskForm):
     address = StringField("Address:", validators=[DataRequired()], render_kw={"placeholder": "Enter Address:"})
     DOB = StringField("Date Of Birth:", validators=[DataRequired()], render_kw={"placeholder": "Enter Date Of Birth:"})
     email = StringField("Email:", validators=[DataRequired()], render_kw={"placeholder": "Enter Email:"})
-    password = PasswordField("Password:", validators=[DataRequired()], render_kw={"placeholder": "Enter Password:"})
-    password_hash = None
+    # password_hash = PasswordField("Password:", validators=[DataRequired(), validators.EqualTo('password_confirm', message="Passwords Must Match")], render_kw={"placeholder": "Enter Password:"})
+    password = PasswordField('New Password', [validators.DataRequired(), validators.EqualTo('confirm', message='Passwords must match')])
+    confirm = PasswordField('Repeat Password')
+    # password_confirm = PasswordField("Confirm Password:", render_kw={"placeholder": "Confirm Password:"})
     register = SubmitField("Register")
 
 
@@ -109,7 +113,7 @@ def add_data():
 
 
 
-# route to sign up page
+# route to sign up page/ delete-----
 @app.route('/sign_upp.html', methods=["POST", "GET"])
 def sign_upp():
 
@@ -188,6 +192,7 @@ def change_admin_info():
 
 
 # route for admin set up, temp
+
 # @app.route('/admin_setup.html', methods=["POST", "GET"])
 # def admin_setup():
 #     if request.method == "POST":
@@ -222,9 +227,12 @@ def user_login():
 @app.route('/sign_upp_example.html', methods=['POST', 'GET'])
 def sign_upp_example():
     name = None
-    form = RegisterForm()
+    form = RegisterForm(request.form)
     
-    if request.method == "POST":
+    if request.method == "POST" and form.validate():
+        
+
+
         full_name = request.form['full_name']
         address = request.form['address']
         date_birth = request.form['dob']
@@ -243,3 +251,8 @@ def sign_upp_example():
         return render_template('sign_upp.html')
 
     return render_template('sign_upp_example.html', form=form)
+
+
+    if request.method == 'POST' and form.validate():
+        user = User(form.username.data, form.email.data,
+                    form.password.data)

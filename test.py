@@ -39,4 +39,4 @@ mydb = mysql.connector.connect(
 
 conn = mydb.cursor()
 
-conn.execute("CREATE DATABASE members")
+# conn.execute("CREATE DATABASE members")
