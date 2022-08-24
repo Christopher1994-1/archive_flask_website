@@ -66,19 +66,19 @@
       <hr>
 
       <b>{{ form.full_name.label}}</b>
-      {{ form.full_name(name="full_name") }}
+      {{ form.full_name() }}
 
       <b>{{ form.address.label}}</b>
-      {{ form.address(name="address") }}
+      {{ form.address() }}
 
       <b>{{ form.DOB.label}}</b>
-      {{ form.DOB(name="dob") }}
+      {{ form.DOB() }}
 
       <b>{{ form.email.label}}</b>
-      {{ form.email(name="email") }}
+      {{ form.email() }}
 
-      <b>{{ form.password.label}}</b>
-      {{ form.password(name="psw") }}
+      <b>{{ form.password_hash.label}}</b>
+      {{ form.password_hash() }}
 
       <br>
       {{ form.register(class="registerbtn") }}
