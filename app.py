@@ -11,6 +11,7 @@ from wtforms import StringField, SubmitField, PasswordField, EmailField, validat
 from wtforms.validators import DataRequired, EqualTo, Length, InputRequired
 from forms import RegistrationForm, LoginForm
 
+
 app = Flask(__name__)
 
 
@@ -29,22 +30,6 @@ app.config['SQLALCHEMY_BINDS'] = {
 # secret key for form
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-
-
-
-# create register form class
-class RegisterForm(FlaskForm):
-    full_name = StringField("Full Name:", validators=[InputRequired()])
-    address = StringField("Address:", validators=[DataRequired()])
-    DOB = StringField("Date Of Birth:", validators=[DataRequired()])
-    email = StringField("Email:", validators=[DataRequired()])
-    password_hash = PasswordField("Password:", validators=[DataRequired(), validators.EqualTo('password_confirm', message="Passwords Must Match")])
-    password_confirm = PasswordField("Confirm Password:")
-    register = SubmitField("Register")
-
-
-
-# TODO watch youtube video on adding names to form calls for html form things
 
 
 
@@ -79,18 +64,6 @@ class Members(db.Model):
 
 
 
-
-
-# create db model for admin info database
-class Admin_info(db.Model):
-    __bind_key__ = 'admin_info'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(200), nullable=False)
-    username = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-
-
-
 # website routes
 
 # route to main index home page
@@ -111,30 +84,6 @@ def search_images():
 @app.route('/add_data.html')
 def add_data():
     return render_template('add_data.html')
-
-
-
-# route to sign up page/ delete-----
-@app.route('/sign_upp.html', methods=["POST", "GET"])
-def sign_upp():
-
-    if request.method == "POST":
-        full_name = request.form['full_name']
-        address = request.form['address']
-        date_birth = request.form['dob']
-        email = request.form['email']
-        password = request.form['psw']
-        new_member = Members(name=full_name, address=address, DOB=date_birth, password=password, email=email)
-
-        # Pushing to db
-        try:
-            db.session.add(new_member)
-            db.session.commit()
-            return render_template('sign_upp_success.html')
-        except:
-            return render_template('sign_upp_failed.html')
-    else:
-        return render_template('sign_upp.html')
 
 
 
@@ -204,8 +153,8 @@ def user_login():
     return render_template('user_login.html')
 
 
-# TODO add user reistration form to db and connent blah blah
 
+# route for family members to sign up
 @app.route('/sign_upp_example.html', methods=["GET", "POST"])
 def sign_upp_example():
         form = RegistrationForm()
