@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 
-
+# TODO learn to quary the data inside db and try to learn to check if a value already exists
 
 mysql_psw = os.environ.get('my_thing')
 
