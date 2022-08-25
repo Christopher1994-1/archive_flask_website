@@ -192,27 +192,6 @@ def change_admin_info():
 
 
 
-# route for admin set up, temp
-
-# @app.route('/admin_setup.html', methods=["POST", "GET"])
-# def admin_setup():
-#     if request.method == "POST":
-#         username = request.form['admin_full_name']
-#         email = request.form['admin_email']
-#         password = request.form['admin_psw']
-#         new_member = Admin_info(username=username, password=password, email=email)
-
-#         # Pushing to db
-#         try:
-#             db.session.add(new_member)
-#             db.session.commit()
-#             return render_template('sign_upp_success.html')
-#         except:
-#             return render_template('sign_upp_failed.html')
-#     else:
-#         return render_template('admin_setup.html')
-
-
 # route for non-signed in user:
 @app.route('/non_auth_index.html')
 def non_auth_index():
@@ -225,11 +204,29 @@ def user_login():
     return render_template('user_login.html')
 
 
+# TODO add user reistration form to db and connent blah blah
+
 @app.route('/sign_upp_example.html', methods=["GET", "POST"])
 def sign_upp_example():
         form = RegistrationForm()
         if form.validate_on_submit():
-            return redirect(url_for('sign_upp_success'))
+            if request.method == "POST":
+                full_name = request.form['full_name']
+                address = request.form['address']
+                date_birth = request.form['dob']
+                email = request.form['email']
+                password = request.form['confirm_password']
+                new_member = Members(name=full_name, address=address, DOB=date_birth, password=password, email=email)
+
+        # Pushing to db
+                try:
+                    db.session.add(new_member)
+                    db.session.commit()
+                    return render_template('sign_upp_success.html')
+                except:
+                    return render_template('sign_upp_failed.html')
+                else:
+                    return redirect(url_for('sign_upp_success'))
 
         return render_template('sign_upp_example.html', form=form)
 
