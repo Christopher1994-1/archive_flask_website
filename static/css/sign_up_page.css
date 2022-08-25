@@ -115,3 +115,13 @@ messed with other elements on other pages. */
   #termsNpri{
     text-align: center;
   }
+
+  .content-section{
+    width: 1000px;
+    margin: auto;
+  }
+
+  .littleText{
+    text-align: center;
+    margin: auto;
+  }

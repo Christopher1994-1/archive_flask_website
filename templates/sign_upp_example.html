@@ -55,11 +55,60 @@
 
 <br>
 
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Register</legend>
+
+            <div class="form-group">
+                {{ form.full_name.label(class="form-control-label") }}
+                {{ form.full_name(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.dob.label(class="form-control-label") }}
+                {{ form.dob(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.address.label(class="form-control-label") }}
+                {{ form.address(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {{ form.email(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.first_password.label(class="form-control-label") }}
+                {{ form.first_password(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {{ form.confirm_password(class="form-control form-control-lg") }}
+            </div>
 
 
-  <h1><a href="{{ url_for('sign_upp_failed') }}">Failed Page</a></h1>
-  <h1><a href="{{ url_for('sign_upp_success') }}">Success Page</a></h1>
-  
+        </fieldset>
+        <div class="form-group">
+            {{ form.register(class="registerbtn") }}
+        </div>
+    </form>
+</div>
+
+<div class="littleText">
+
+    <small clas="text-muted">
+        Already Have An Account? <a class="ml-2" href="{{ url_for('user_login') }}">Family Sign In</a>
+    </small>
+</div>
+
+{% endblock content%}
+<br><br>
 
 </body>
 </html>

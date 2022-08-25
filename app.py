@@ -225,10 +225,10 @@ def user_login():
     return render_template('user_login.html')
 
 
-@app.route('/sign_upp_example.html')
+@app.route('/sign_upp_example.html', methods=["GET", "POST"])
 def sign_upp_example():
         form = RegistrationForm()
-        return render_template('sign_upp_example.html')
+        return render_template('sign_upp_example.html', form=form)
 
 
 if __name__ == "__main__":
