@@ -2,7 +2,7 @@
 from email import message
 from urllib import request
 from wsgiref.validate import validator
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -228,6 +228,9 @@ def user_login():
 @app.route('/sign_upp_example.html', methods=["GET", "POST"])
 def sign_upp_example():
         form = RegistrationForm()
+        if form.validate_on_submit():
+            return redirect(url_for('sign_upp_success'))
+
         return render_template('sign_upp_example.html', form=form)
 
 
