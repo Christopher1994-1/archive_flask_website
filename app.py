@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
 from wtforms.validators import DataRequired, EqualTo, Length, InputRequired
-
+from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 
@@ -35,11 +35,11 @@ app.config['SECRET_KEY'] = SECRET_KEY
 # create register form class
 class RegisterForm(FlaskForm):
     full_name = StringField("Full Name:", validators=[InputRequired()])
-    address = StringField("Address:", validators=[DataRequired()], render_kw={"placeholder": "Enter Address:"})
-    DOB = StringField("Date Of Birth:", validators=[DataRequired()], render_kw={"placeholder": "Enter Date Of Birth:"})
-    email = StringField("Email:", validators=[DataRequired()], render_kw={"placeholder": "Enter Email:"})
-    password_hash = PasswordField("Password:", validators=[DataRequired(), validators.EqualTo('password_confirm', message="Passwords Must Match")], render_kw={"placeholder": "Enter Password:"})
-    password_confirm = PasswordField("Confirm Password:", render_kw={"placeholder": "Confirm Password:"})
+    address = StringField("Address:", validators=[DataRequired()])
+    DOB = StringField("Date Of Birth:", validators=[DataRequired()])
+    email = StringField("Email:", validators=[DataRequired()])
+    password_hash = PasswordField("Password:", validators=[DataRequired(), validators.EqualTo('password_confirm', message="Passwords Must Match")])
+    password_confirm = PasswordField("Confirm Password:")
     register = SubmitField("Register")
 
 
@@ -225,7 +225,11 @@ def user_login():
     return render_template('user_login.html')
 
 
-@app.route('/sign_upp_example.html', methods=['POST', 'GET'])
+@app.route('/sign_upp_example.html')
 def sign_upp_example():
-        form = RegisterForm(request.form)
-        return render_template('sign_upp_example.html', form=form)
+        form = RegistrationForm()
+        return render_template('sign_upp_example.html')
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
