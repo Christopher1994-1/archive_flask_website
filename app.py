@@ -2,9 +2,10 @@
 from email import message
 from urllib import request
 from wsgiref.validate import validator
-from flask import Flask, render_template, redirect, request, flash, url_for
+from flask import Flask, render_template, redirect, request, flash, url_for 
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
@@ -13,6 +14,7 @@ from forms import RegistrationForm, LoginForm
 
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 
 # environment variables
@@ -43,24 +45,7 @@ class Members(db.Model):
     address = db.Column(db.String(200), nullable=False)
     DOB = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(200), nullable=False)
-    # adding password hash
-    password_hash = db.Column(db.String(200), nullable=False)
-
-
-    @property
-    def password(self):
-        raise AttributeError("Password is not a readable attribute!")
-    
-    @password.setter
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-    
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    # Create a method to return a string when we add something
-    # def __repr__(self):
-    #     return '<Name %r>' % self.id
+    password = db.Column(db.String(200), nullable=False)
 
 
 
@@ -165,7 +150,8 @@ def sign_upp_example():
                 date_birth = request.form['dob']
                 email = request.form['email']
                 password = request.form['confirm_password']
-                new_member = Members(name=full_name, address=address, DOB=date_birth, password=password, email=email)
+                hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+                new_member = Members(name=full_name, address=address, DOB=date_birth, password=hashed_password, email=email)
 
         # Pushing to db
                 try:
