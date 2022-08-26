@@ -5,16 +5,19 @@ from wsgiref.validate import validator
 from flask import Flask, render_template, redirect, request, flash, url_for 
 from flask_sqlalchemy import SQLAlchemy
 import os
+import mysql.connector
 from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
 from wtforms.validators import DataRequired, EqualTo, Length, InputRequired
 from forms import RegistrationForm, LoginForm
+from flask_login import LoginManager, UserMixin
 
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 
 # environment variables
@@ -39,7 +42,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 db = SQLAlchemy(app)
 
 # Create db model
-class Members(db.Model):
+class Members(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     address = db.Column(db.String(200), nullable=False)
@@ -48,6 +51,9 @@ class Members(db.Model):
     password = db.Column(db.String(200), nullable=False)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Members.query.get(int(user_id))
 
 # website routes
 
@@ -104,10 +110,12 @@ def sign_upp_failed():
 @app.route('/admin_override.html')
 def admin_override():
     sql_psw = os.environ.get('my_thing')
+    fun_db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd=f"{sql_psw}"
+    )
     
-
-    admin_username = None
-    admin_psw = None
     return render_template('admin_override.html')
 
 

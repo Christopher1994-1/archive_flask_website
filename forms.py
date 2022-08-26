@@ -1,11 +1,12 @@
+from genericpath import exists
 from xml.dom import ValidationErr
 from xmlrpc.client import Boolean
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators
-from wtforms.validators import DataRequired, Email, Length, EqualTo, email_validator
+from wtforms.validators import DataRequired, Email, Length, EqualTo, email_validator, ValidationError
 import email_validator
 import mysql.connector
-
+import os
 
 # TODO look through db to see if something exists
 
@@ -21,9 +22,28 @@ class RegistrationForm(FlaskForm):
     register = SubmitField("Register")
 
     def validate_email(self, email):
-        email_test = None
-        if True:
-            raise ValidationErr('Message')
+        mysql_pass = os.environ.get('my_thing')
+
+        fun_db = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd=f"{mysql_pass}"
+            )
+
+        my_cursor = fun_db.cursor()
+        my_cursor.execute("SELECT * FROM members.members;")
+        result = my_cursor.fetchall()
+        results_list = []
+
+        for row in result:
+            id, name, address, dob, email, hash_psw = row
+            results_list.append(email)
+    
+        if email in results_list:
+            exist = True
+    
+        if exist:
+            raise ValidationError('That email already exists: please choose another')
 
 
 # Class for user login form

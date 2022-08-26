@@ -52,27 +52,61 @@
 
 <br>
 
-<form action="action_page.php" method="post">
-    <div class="imgcontainer">
 
-    </div>
-  
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input id ="username_input" type="text" placeholder="Enter Username:" name="uname" required>
-  
-      <label for="psw"><b>Password</b></label>
-      <input id="psw-id" type="password" placeholder="Enter Password:" name="psw" required>
-  
-      <button id="login-btn" type="submit">Login</button>
-    </div>
-  
-    <div class="container">
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Register</legend>
 
+            <!-- full name form field -->
+            <div class="form-group">
+                {{ form.full_name.label(class="form-control-label") }}
 
+                {% if form.full_name.errors %}
+                    {{ form.full_name(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.full_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ form.full_name(class="form-control form-control-lg") }}
+                {% endif %}
+                </div>
+
+                            <!-- date of birth form field -->
+            <div class="form-group">
+                {{ form.dob.label(class="form-control-label") }}
+
+                {% if form.dob.errors %}
+                    {{ form.dob(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.dob.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ form.dob(class="form-control form-control-lg") }}
+                {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-control">
+                {{ form.register(class="registerbtn") }}
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account? <a href="{{ url_for('user_login') }}">Family Sign In</a>
+            </small>
+        </div>
+        
+    </div>
+    
+    
+    
+    {% endblock content%}
 
 <a href="{{ url_for('admin_update') }}"><button type="button" class="btn btn-outline-secondary">Temp</button></a>
 
