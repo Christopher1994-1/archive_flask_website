@@ -114,17 +114,17 @@
 
                             <!-- email form field -->
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+                {{ form.form_email.label(class="form-control-label") }}
 
-                {% if form.email.errors %}
-                    {{ form.email(class="form-control form-control-lg is-invalid")}}
+                {% if form.form_email.errors %}
+                    {{ form.form_email(class="form-control form-control-lg is-invalid")}}
                     <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
+                        {% for error in form.form_email.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                             </div>
                 {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
+                {{ form.form_email(class="form-control form-control-lg") }}
                 {% endif %}
                 </div>
 

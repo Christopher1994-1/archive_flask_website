@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, validators
 from wtforms.validators import DataRequired, EqualTo, Length, InputRequired
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, AdminLogin
 from flask_login import LoginManager, UserMixin
 
 
@@ -54,6 +54,11 @@ class Members(db.Model, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return Members.query.get(int(user_id))
+
+
+# TODO finish admin_override route db stuff
+# TODO add email and password checks for admin login form
+# TODO see if @login_manager can have two sepate things, one for users and one for admin
 
 # website routes
 
@@ -107,16 +112,17 @@ def sign_upp_failed():
 
 
 # route to admin override page
-@app.route('/admin_override.html')
+@app.route('/admin_override.html', methods=["POST", "GET"])
 def admin_override():
+    form = AdminLogin()
+
     sql_psw = os.environ.get('my_thing')
     fun_db = mysql.connector.connect(
         host="localhost",
         user="root",
         passwd=f"{sql_psw}"
     )
-    
-    return render_template('admin_override.html')
+    return render_template('admin_override.html', form=form)
 
 
 
@@ -141,9 +147,13 @@ def non_auth_index():
 
 
 # route for users/family members to sign in
-@app.route('/user_login.html')
+@app.route('/user_login.html', methods=["GET", "POST"])
 def user_login():
-    return render_template('user_login.html')
+    # TODO add user login info
+    form = LoginForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('user_login.html', form=form)
 
 
 
@@ -156,7 +166,7 @@ def sign_upp_example():
                 full_name = request.form['full_name']
                 address = request.form['address']
                 date_birth = request.form['dob']
-                email = request.form['email']
+                email = request.form['form_email']
                 password = request.form['confirm_password']
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
                 new_member = Members(name=full_name, address=address, DOB=date_birth, password=hashed_password, email=email)

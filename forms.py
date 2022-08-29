@@ -16,19 +16,19 @@ class RegistrationForm(FlaskForm):
     full_name = StringField("Full Name:", validators=[DataRequired()])
     dob = StringField("Date of Birth:", validators=[DataRequired()])
     address = StringField("Street Address", validators=[DataRequired()])
-    email = StringField("Email", [validators.DataRequired(), validators.Email()])
+    form_email = StringField("Email", [validators.DataRequired(), validators.Email()])
     first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('first_password')])
     register = SubmitField("Register")
 
-    def validate_email(self, email):
+    def validate_email(self, form_email):
         mysql_pass = os.environ.get('my_thing')
 
         fun_db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd=f"{mysql_pass}"
-            )
+                host="localhost",
+                user="root",
+                passwd=f"{mysql_pass}"
+        )
 
         my_cursor = fun_db.cursor()
         my_cursor.execute("SELECT * FROM members.members;")
@@ -38,16 +38,24 @@ class RegistrationForm(FlaskForm):
         for row in result:
             id, name, address, dob, email, hash_psw = row
             results_list.append(email)
-    
-        if email in results_list:
-            exist = True
-    
-        if exist:
+            
+        if form_email in results_list:
             raise ValidationError('That email already exists: please choose another')
+        else:
+            pass
+
 
 
 # Class for user login form
 class LoginForm(FlaskForm):
+    email = StringField("Email", [validators.DataRequired(), validators.Email()])
+    first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
+    register = SubmitField("Login")
+
+
+
+# Class for admin user login
+class AdminLogin(FlaskForm):
     email = StringField("Email", [validators.DataRequired(), validators.Email()])
     first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
     register = SubmitField("Login")
