@@ -1,5 +1,5 @@
 from flask_site import db, login_manager
-from flask_login import LoginManager, UserMixin
+from flask_login import UserMixin
 
 # Create db model
 class Members(db.Model, UserMixin):
@@ -15,3 +15,4 @@ class Members(db.Model, UserMixin):
 def load_user(user_id):
     return Members.query.get(int(user_id))
 
+ 

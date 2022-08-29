@@ -97,3 +97,28 @@
     font-weight: bold;
     margin: auto;
 }
+
+#wrapperDiv{
+    width: 1000px;
+    margin: auto;
+
+}
+
+#div1{
+    text-align: center;
+}
+
+#div2{
+    width: 980px;
+    text-align: right;
+    text-decoration: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+/* 
+<div id="wrapperDiv">
+<div id="div1" style="padding:20px;background-color:#decddd;float:left">Div tag 1</div>
+<div id="div2" style="padding:20px;background-color:#cedddd;float:left">Div tag 2</div>
+</div> */

@@ -1,4 +1,5 @@
 from genericpath import exists
+from math import remainder
 from xml.dom import ValidationErr
 from xmlrpc.client import Boolean
 from flask_wtf import FlaskForm
@@ -26,6 +27,7 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField("Email", [validators.DataRequired(), validators.Email()])
     first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
+    remember = BooleanField("Remember Me")
     register = SubmitField("Login")
 
 

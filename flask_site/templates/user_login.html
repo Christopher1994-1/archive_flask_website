@@ -56,6 +56,16 @@
 <p id="login_in_warning">In order to have full access to this website you must sign up or if you are already signed up and approved you can login in. If you are not signed up you can register <a href="{{ url_for('sign_upp_example') }}">here</a></p>
 
 {% block content %}
+
+
+    {% for message in get_flashed_messages() %}
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -64,17 +74,17 @@
 
             <!-- admin email login form field -->
             <div class="form-group">
-                {{ form.form_email.label(class="form-control-label") }}
+                {{ form.email.label(class="form-control-label") }}
 
-                {% if form.form_email.errors %}
-                    {{ form.form_email(class="form-control form-control-lg is-invalid")}}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid")}}
                     <div class="invalid-feedback">
-                        {% for error in form.form_email.errors %}
+                        {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                             </div>
                 {% else %}
-                {{ form.form_email(class="form-control form-control-lg") }}
+                {{ form.email(class="form-control form-control-lg") }}
                 {% endif %}
                 </div>
 

@@ -1,9 +1,8 @@
-import imp
-from re import M
 from flask import Flask, render_template, redirect, request, flash, url_for 
 from flask_site.forms import RegistrationForm, LoginForm, AdminLogin
 from flask_site import app
 import os
+from flask_login import login_user, current_user
 import mysql.connector
 from flask_site import bcrypt, db
 from flask_site.models import Members
@@ -64,6 +63,9 @@ def sign_upp_failed():
 @app.route('/admin_override.html', methods=["POST", "GET"])
 def admin_override():
     form = AdminLogin()
+    # if form.email.data == "whatever" AND form.password.data == "whatever"
+    # flash("Admin Logged In")
+    # return render_template("admin_update.html")
 
     sql_psw = os.environ.get('my_thing')
     fun_db = mysql.connector.connect(
@@ -98,11 +100,18 @@ def non_auth_index():
 # route for users/family members to sign in
 @app.route('/user_login.html', methods=["GET", "POST"])
 def user_login():
-    # TODO add user login info
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        pass
-    return render_template('user_login.html', form=form)
+        user_email = form.email.data
+        user = Members.query.filter(Members.email==user_email).first()
+        if user and bcrypt.check_password_hash(user.password, form.first_password.data):
+            login_user(user, remember=form.remember.data)
+            return render_template("index.html")
+        else:
+            flash("Login Unsuccessful. Please check your email and password!")
+    return render_template("user_login.html", form=form)
 
 
 
