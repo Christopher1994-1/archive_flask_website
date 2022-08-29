@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo, email_valid
 import email_validator
 import mysql.connector
 import os
+from flask_site.models import Members
 
 # TODO look through db to see if something exists
 
@@ -20,31 +21,6 @@ class RegistrationForm(FlaskForm):
     first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('first_password')])
     register = SubmitField("Register")
-
-    def validate_email(self, form_email):
-        mysql_pass = os.environ.get('my_thing')
-
-        fun_db = mysql.connector.connect(
-                host="localhost",
-                user="root",
-                passwd=f"{mysql_pass}"
-        )
-
-        my_cursor = fun_db.cursor()
-        my_cursor.execute("SELECT * FROM members.members;")
-        result = my_cursor.fetchall()
-        results_list = []
-
-        for row in result:
-            id, name, address, dob, email, hash_psw = row
-            results_list.append(email)
-            
-        if form_email in results_list:
-            raise ValidationError('That email already exists: please choose another')
-        else:
-            pass
-
-
 
 # Class for user login form
 class LoginForm(FlaskForm):

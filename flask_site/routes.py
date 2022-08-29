@@ -1,4 +1,5 @@
 import imp
+from re import M
 from flask import Flask, render_template, redirect, request, flash, url_for 
 from flask_site.forms import RegistrationForm, LoginForm, AdminLogin
 from flask_site import app
@@ -110,23 +111,42 @@ def user_login():
 def sign_upp_example():
         form = RegistrationForm()
         if form.validate_on_submit():
-            if request.method == "POST":
-                full_name = request.form['full_name']
-                address = request.form['address']
-                date_birth = request.form['dob']
-                email = request.form['form_email']
-                password = request.form['confirm_password']
-                hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-                new_member = Members(name=full_name, address=address, DOB=date_birth, password=hashed_password, email=email)
-
-        # Pushing to db
-                try:
-                    db.session.add(new_member)
-                    db.session.commit()
-                    return render_template('sign_upp_success.html')
-                except:
-                    return render_template('sign_upp_failed.html')
-                else:
-                    return redirect(url_for('sign_upp_success'))
-
+            hashed_password = bcrypt.generate_password_hash(form.confirm_password.data)
+            full_name = form.full_name.data
+            address = form.address.data
+            dob = form.dob.data
+            email = form.form_email.data
+            new_member = Members(name=full_name, address=address, DOB=dob, email=email, password=hashed_password)
+            user = Members.query.filter(Members.email==email).first()
+            if user != None:
+                flash("Please use another email")
+            
+            else:
+                db.session.add(new_member)
+                db.session.commit()
+                return redirect(url_for('sign_upp_success'))
         return render_template('sign_upp_example.html', form=form)
+            
+
+
+            
+        #     if request.method == "POST":
+        #         full_name = request.form['full_name']
+        #         address = request.form['address']
+        #         date_birth = request.form['dob']
+        #         email = request.form['form_email']
+        #         password = request.form['confirm_password']
+        #         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        #         new_member = Members(name=full_name, address=address, DOB=date_birth, password=hashed_password, email=email)
+
+        # # Pushing to db
+        #         try:
+        #             db.session.add(new_member)
+        #             db.session.commit()
+        #             return render_template('sign_upp_success.html')
+        #         except:
+        #             return render_template('sign_upp_failed.html')
+        #         else:
+        #             return redirect(url_for('sign_upp_success'))
+
+        # return render_template('sign_upp_example.html', form=form)
