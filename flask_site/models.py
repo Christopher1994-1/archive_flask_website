@@ -11,6 +11,13 @@ class Members(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
 
 
+class Images(db.Model):
+    __bind_key__ = 'images'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    path = db.Column(db.Text, nullable=False)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return Members.query.get(int(user_id))

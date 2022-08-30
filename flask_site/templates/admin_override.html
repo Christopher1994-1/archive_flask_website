@@ -17,7 +17,11 @@
 
 <nav id="main-navbar" class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
+        <a class="navbar-brand" href="{% if user_in == True %}
+        {{ url_for('index.html') }}
+        {% else %}
+        {{ url_for('non_auth_index') }}
+    {% endif %}">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -63,17 +67,17 @@
 
             <!-- admin email login form field -->
             <div class="form-group">
-                {{ form.form_email.label(class="form-control-label") }}
+                {{ form.email.label(class="form-control-label") }}
 
-                {% if form.form_email.errors %}
-                    {{ form.form_email(class="form-control form-control-lg is-invalid")}}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid")}}
                     <div class="invalid-feedback">
-                        {% for error in form.form_email.errors %}
+                        {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                             </div>
                 {% else %}
-                {{ form.form_email(class="form-control form-control-lg") }}
+                {{ form.email(class="form-control form-control-lg") }}
                 {% endif %}
                 </div>
 
