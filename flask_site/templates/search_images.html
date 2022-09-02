@@ -55,52 +55,60 @@
 <div class="s-container">
     <h1 class="s-heading">Type to search images</h1>
     <input type="text" id="search-box" placeholder="search JINJI images">
-
+    
+    <div class="gallery">
         <div class="s-image-container">
+            
 
-                <div class="s-image" data-title="ann">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+                <main id="image-gallery" class="images"></main>
+
+                <!-- <div class="s-image" data-title="ann">
+
                     <img class="s-img" src="/static/images/search_images/1.jpg" alt="">
                             <h3>Something</h3>
                 </div>
 
                 <div class="s-image" data-title="bill">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+
                     <img class="s-img" src="/static/images/search_images/2.jpg" alt="lol">
                             <h3>Something</h3>
                 </div>
 
                 <div class="s-image" data-title="mine">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+         
                     <img class="s-img" src="/static/images/search_images/3.jpg" alt="">
                             <h3>Something</h3>
                 </div>
 
                 <div class="s-image" data-title="mine">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+
                     <img class="s-img" src="/static/images/search_images/4.jpg" alt="">
                             <h3>Something</h3>
                 </div>
 
                 <div class="s-image" data-title="mine">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+
                     <img class="s-img" src="/static/images/search_images/5.jpg" alt="">
                             <h3>Something</h3>
                 </div>
 
 
                 <div class="s-image" data-title="mine">
-                    <!-- maybe i can use jinji to create some sort of for loop that does a 
-                    random image -->
+
                     <img class="s-img" src="/static/images/search_images/6.jpg" alt="">
                             <h3>Something</h3>
-                </div>
+                </div> -->
+            </div>
         </div>
+
+        <footer id="gallery-pagination">
+            <button id="btnPrevious">&larr; <span class="sr-only">Previous</span></button>
+            <div>
+              <div id="gallery-dots"></div>
+              <span id="page"></span>
+            </div>
+            <button id="btnNext"><span class="sr-only">Next </span>&rarr;</button>
+          </footer>
 
 </div>
 

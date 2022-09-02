@@ -104,13 +104,6 @@ def change_admin_info():
     return render_template('change_admin_info.html')
 
 
-
-# route for non-signed in user:
-# @app.route('/non_auth_index.html')
-# def non_auth_index():
-#     return render_template('non_auth_index.html')
-
-
 # route for users/family members to sign in
 @app.route('/user_login.html', methods=["GET", "POST"])
 def user_login():
@@ -158,25 +151,17 @@ def sign_upp_example():
 # TODO try to find out where file is 
 @app.route("/admin_add_images.html", methods=["POST", "GET"])
 def admin_add_images():
-    form = AddingImages()
-    if form.validate_on_submit():
-        image_name = form.img_name.data
-        image = form.image.data
 
-        # here
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash("File has been saved")
-            return redirect(url_for('admin_add_images.html', filename=filename))
+    form = AddingImages()
+    image = form.image.data
+    if form.validate_on_submit():
+        if request.method == "POST":
+            image.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"], secure_filename(image.filename)))
+            flash("File uploaded")
+        else:
+            flash("File not uploaded")
 
     return render_template("admin_add_images.html", form=form)
+
+# TODO find a way to add the images into the search images page. 
+# And find a way to keep adding the images you upload

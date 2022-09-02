@@ -41,7 +41,5 @@ class AdminLogin(FlaskForm):
 
 # Class for adding images
 class AddingImages(FlaskForm):
-    img_name = StringField("Name of photo", [validators.DataRequired()])
     image = FileField("Image File")
-    mimetype = None
-    submit = SubmitField("Upload to DB")
+    submit = SubmitField("Upload")
