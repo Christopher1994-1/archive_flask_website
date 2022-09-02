@@ -5,12 +5,15 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_image_search import ImageSearch
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'user_login'
+UPLOAD_FOLDER = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # environment variables
 mysql_psw = os.environ.get('my_thing')
@@ -22,6 +25,9 @@ app.config['SQLALCHEMY_BINDS'] = {
     'admin_info': f'mysql+pymysql://root:{mysql_psw}@localhost:3306/admin_info',
     'images' : f'mysql+pymysql://root:{mysql_psw}@localhost:3306/images'
 }
+
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # secret key for form
 SECRET_KEY = os.urandom(32)

@@ -1,12 +1,21 @@
+import mimetypes
 from flask import Flask, render_template, redirect, request, flash, url_for 
-from flask_site.forms import RegistrationForm, LoginForm, AdminLogin
+from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
 import mysql.connector
-from flask_site import bcrypt, db
-from flask_site.models import Members
+from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
+from flask_site.models import Members, Images
 from werkzeug.security import generate_password_hash, check_password_hash
+
+# functions routes may need
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # website routes
 
@@ -82,7 +91,7 @@ def admin_override():
 
 # route to conditional admin update page
 @app.route('/admin_update.html')
-@login_required
+# @login_required
 def admin_update():
     return render_template('admin_update.html')
 
@@ -145,6 +154,29 @@ def sign_upp_example():
         return render_template('sign_upp_example.html', form=form)
             
 
-@app.route("/admin_add_images.html")
+
+# TODO try to find out where file is 
+@app.route("/admin_add_images.html", methods=["POST", "GET"])
 def admin_add_images():
-    return render_template("admin_add_images.html")
+    form = AddingImages()
+    if form.validate_on_submit():
+        image_name = form.img_name.data
+        image = form.image.data
+
+        # here
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash("File has been saved")
+            return redirect(url_for('admin_add_images.html', filename=filename))
+
+    return render_template("admin_add_images.html", form=form)

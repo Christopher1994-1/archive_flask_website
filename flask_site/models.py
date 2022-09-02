@@ -10,12 +10,13 @@ class Members(db.Model, UserMixin):
     email = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-
+# error when trying to create.all() function
 class Images(db.Model):
     __bind_key__ = 'images'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    path = db.Column(db.Text, nullable=False)
+    name = db.Column(db.Text, nullable=False)
+    img = db.Column(db.BLOB, nullable=True)
+    mimetype = db.Column(db.Text, nullable=False)
 
 
 @login_manager.user_loader
