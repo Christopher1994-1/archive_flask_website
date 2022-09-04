@@ -32,6 +32,8 @@ var imgs = [];
 // figure out a way to loop through the files of the images folder and add them to the source var, 
 // start with looking on youtube 'looping through files in folder js'
 
+// then for every photo take the name and add it to the title var
+
 for (var i = 0; i < 36; i++) {
   images.push({
     title: "Image " + (i + 1),
