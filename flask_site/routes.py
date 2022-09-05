@@ -1,5 +1,6 @@
+from email.mime import image
 import mimetypes
-from flask import Flask, render_template, redirect, request, flash, url_for 
+from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
 from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin
 from flask_site import app
 import os
@@ -15,6 +16,18 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+def upload():
+    target = os.path.join(APP_ROOT, '/static/images/search_images')
+    if not os.path.isdir(target):
+        flash("Thing doesn't exist")
+    else:
+        for upload in request.files.getlist('files'):
+            filename = upload.filename
+            destination = '/'.join([target, filename])
+            upload.save(destination)
 
 
 # website routes
@@ -37,7 +50,13 @@ def index():
 @app.route('/search_images.html')
 @login_required
 def search_images():
-    return render_template('search_images.html')
+    image_names = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
+    def send_image():
+        images = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
+        for image in images:
+            return send_from_directory('images', image)
+    return render_template('search_images.html', image_names=image_names)
+    # TODO add the send_image function so that it is accessable to the html file and find out why its not accessable rn
 
 
 
@@ -162,6 +181,3 @@ def admin_add_images():
             flash("File not uploaded")
 
     return render_template("admin_add_images.html", form=form)
-
-# TODO find a way to add the images into the search images page. 
-# And find a way to keep adding the images you upload

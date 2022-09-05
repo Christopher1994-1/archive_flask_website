@@ -3,8 +3,17 @@ import mysql.connector
 import os
 import sqlite3
 
+ma = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
+print(ma)
 
 
+print()
+
+for i in ma:
+    print(i)
+
+# my = os.path.dirname(os.path.abspath(__file__))
+# print("this is what it prints" + my)
 
 # mysql_pass = os.environ.get('my_thing')
 
