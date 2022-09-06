@@ -63,50 +63,16 @@
                 <main id="image-gallery" class="images"></main>
 
 
-
-                <div class="s-image" data-title="ann">
-
-                    <img class="s-img" src="/static/images/search_images/1.jpg" alt="">
-                            <h3>Something</h3>
+                {% for pic in pics %}
+                <!-- TODO look up how to add the file name to the data-title for search -->
+                <div class="s-image" data-title="{{ i }}">
+                    <img src="/static/images/search_images/{{ pic }}" alt="">
+                    <h3>{% for name in pic %}
+                            {{ name }}
+                        {% endfor %}
+                    </h3>
                 </div>
-
-                {% for image_name in image_names %}
-                <div class="s-image" data-title="">
-                    <img src="{{ }}" alt="">
-                </div>
-
-                <!-- <div class="s-image" data-title="bill">
-
-                    <img class="s-img" src="/static/images/search_images/2.jpg" alt="lol">
-                            <h3>Something</h3>
-                </div>
-
-                <div class="s-image" data-title="mine">
-         
-                    <img class="s-img" src="/static/images/search_images/3.jpg" alt="">
-                            <h3>Something</h3>
-                </div>
-
-                <div class="s-image" data-title="mine">
-
-                    <img class="s-img" src="/static/images/search_images/4.jpg" alt="">
-                            <h3>Something</h3>
-                </div>
-
-                <div class="s-image" data-title="mine">
-
-                    <img class="s-img" src="/static/images/search_images/5.jpg" alt="">
-                            <h3>Something</h3>
-                </div>
-
-
-                <div class="s-image" data-title="mine">
-
-                    <img class="s-img" src="/static/images/search_images/6.jpg" alt="">
-                            <h3>Something</h3>
-                </div> -->
- 
- 
+                {% endfor %}
  
                  </div>
         </div>

@@ -19,6 +19,7 @@ def allowed_file(filename):
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+@app.route('/upload')
 def upload():
     target = os.path.join(APP_ROOT, '/static/images/search_images')
     if not os.path.isdir(target):
@@ -46,16 +47,20 @@ def index():
     return render_template("index.html")
 
 
+@app.route('/upload/<filename>')
+def send_image(filename):
+    return send_from_directory("images", filename)
+
 # route to search images page
 @app.route('/search_images.html')
 @login_required
 def search_images():
-    image_names = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-    def send_image():
-        images = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-        for image in images:
-            return send_from_directory('images', image)
-    return render_template('search_images.html', image_names=image_names)
+    pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
+    # TODO gets names of images and pass them on
+
+
+    return render_template('search_images.html', pics=pics, pic_names=pics)
+
     # TODO add the send_image function so that it is accessable to the html file and find out why its not accessable rn
 
 
