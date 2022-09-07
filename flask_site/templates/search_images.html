@@ -62,15 +62,12 @@
 
                 <main id="image-gallery" class="images"></main>
 
-
                 {% for pic in pics %}
-                <!-- TODO look up how to add the file name to the data-title for search -->
-                <div class="s-image" data-title="{{ i }}">
+                <!-- TODO adding image to search image folder and see if it updates -->
+                <!-- TODO add enough images to see if pagingtion takes place-->
+                <div class="s-image" data-title="{{ pic.replace('.jpg', '') }}">
                     <img src="/static/images/search_images/{{ pic }}" alt="">
-                    <h3>{% for name in pic %}
-                            {{ name }}
-                        {% endfor %}
-                    </h3>
+                    <h3>{{pic.replace('.jpg', '')}}</h3>
                 </div>
                 {% endfor %}
  

@@ -19,17 +19,6 @@ def allowed_file(filename):
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-@app.route('/upload')
-def upload():
-    target = os.path.join(APP_ROOT, '/static/images/search_images')
-    if not os.path.isdir(target):
-        flash("Thing doesn't exist")
-    else:
-        for upload in request.files.getlist('files'):
-            filename = upload.filename
-            destination = '/'.join([target, filename])
-            upload.save(destination)
-
 
 # website routes
 
@@ -47,22 +36,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/upload/<filename>')
-def send_image(filename):
-    return send_from_directory("images", filename)
-
 # route to search images page
 @app.route('/search_images.html')
 @login_required
 def search_images():
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
     # TODO gets names of images and pass them on
+    # filenames = os.path.splitext(pics)[0]
 
 
-    return render_template('search_images.html', pics=pics, pic_names=pics)
-
-    # TODO add the send_image function so that it is accessable to the html file and find out why its not accessable rn
-
+    return render_template('search_images.html', pics=pics)
 
 
 # route to add data page
@@ -106,10 +89,7 @@ def sign_upp_failed():
 @app.route('/admin_override.html', methods=["POST", "GET"])
 def admin_override():
     form = AdminLogin()
-    user_in = None
-    if current_user.is_authenticated:
-        user_in = True
-    return render_template('admin_override.html', form=form, user_in=user_in)
+    return render_template('admin_override.html', form=form)
 
 
 
@@ -171,18 +151,10 @@ def sign_upp_example():
         return render_template('sign_upp_example.html', form=form)
             
 
-
-# TODO try to find out where file is 
-@app.route("/admin_add_images.html", methods=["POST", "GET"])
+# route for admin to add images
+@app.route('/admin_add_images.html', methods=["POST", "GET"])
 def admin_add_images():
-
     form = AddingImages()
-    image = form.image.data
-    if form.validate_on_submit():
-        if request.method == "POST":
-            image.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"], secure_filename(image.filename)))
-            flash("File uploaded")
-        else:
-            flash("File not uploaded")
-
-    return render_template("admin_add_images.html", form=form)
+    # TODO add code to take image uploaded here and add it to the search_images folder, and have an option
+    # to choose which folder you want to add too
+    return render_template('admin_add_images.html', form=form)
