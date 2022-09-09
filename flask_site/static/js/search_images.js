@@ -17,129 +17,75 @@ searchBox.oninput = () =>{
 };
 
 
-// // dont be confused with 'images' and 'image' variables 
 
+var current_page = 1;
+var records_per_page = 2;
 
-// var previous = document.getElementById('btnPrevious')
-// var next = document.getElementById('btnNext')
-// var gallery = document.getElementById('image-gallery')
-// var pageIndicator = document.getElementById('page')
-// var galleryDots = document.getElementById('gallery-dots');
+var objJson = [
+    { adName: "AdName 1"},
+    { adName: "AdName 2"},
+    { adName: "AdName 3"},
+    { adName: "AdName 4"},
+    { adName: "AdName 5"},
+    { adName: "AdName 6"},
+    { adName: "AdName 7"},
+    { adName: "AdName 8"},
+    { adName: "AdName 9"},
+    { adName: "AdName 10"}
+]; // Can be obtained from another source, such as your objJson variable
 
-// var images= [];
-// var imgs = [];
+function prevPage()
+{
+    if (current_page > 1) {
+        current_page--;
+        changePage(current_page);
+    }
+}
 
-// // figure out a way to loop through the files of the images folder and add them to the source var, 
-// // start with looking on youtube 'looping through files in folder js'
+function nextPage()
+{
+    if (current_page < numPages()) {
+        current_page++;
+        changePage(current_page);
+    }
+}
+    
+function changePage(page)
+{
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var listing_table = document.getElementById("listingTable");
+    var page_span = document.getElementById("page");
+ 
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > numPages()) page = numPages();
 
-// // then for every photo take the name and add it to the title var
+    listing_table.innerHTML = "";
 
-// for (var i = 0; i < 36; i++) {
-//   images.push({
-//     title: "Image " + (i + 1),
-//     source: "static/images/search_images" + i
-//   });
-// }
+    for (var i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
+        listing_table.innerHTML += objJson[i].adName + "<br>";
+    }
+    page_span.innerHTML = page;
 
-// var perPage = 8;
-// var page = 1;
-// var pages = Math.ceil(images.length / perPage)
+    if (page == 1) {
+        btn_prev.style.visibility = "hidden";
+    } else {
+        btn_prev.style.visibility = "visible";
+    }
 
+    if (page == numPages()) {
+        btn_next.style.visibility = "hidden";
+    } else {
+        btn_next.style.visibility = "visible";
+    }
+}
 
-// // Gallery dots
-// for (var i = 0; i < pages; i++){
-//   var dot = document.createElement('button')
-//   var dotSpan = document.createElement('span')
-//   var dotNumber = document.createTextNode(i + 1)
-//   dot.classList.add('gallery-dot');
-//   dot.setAttribute('data-index', i);
-//   dotSpan.classList.add('sr-only');
-  
-//   dotSpan.appendChild(dotNumber);
-//   dot.appendChild(dotSpan)
-  
-//   dot.addEventListener('click', function(e) {
-//     var self = e.target
-//     goToPage(self.getAttribute('data-index'))
-//   })
-  
-//   galleryDots.appendChild(dot)
-// }
+function numPages()
+{
+    return Math.ceil(objJson.length / records_per_page);
+}
 
-// // Previous Button
-// previous.addEventListener('click', function() {
-//   if (page === 1) {
-//     page = 1;
-//   } else {
-//     page--;
-//     showImages();
-//   }
-// })
-
-// // Next Button
-// next.addEventListener('click', function() {
-//   if (page < pages) {
-//     page++;
-//     showImages();
-//   }
-// })
-
-// // Jump to page
-// function goToPage(index) {
-//   index = parseInt(index);
-//   page =  index + 1;
-  
-//   showImages();
-// }
-
-// // Load images
-// function showImages() {
-//   while(gallery.firstChild) gallery.removeChild(gallery.firstChild)
-  
-//   var offset = (page - 1) * perPage;
-//   var dots = document.querySelectorAll('.gallery-dot');
-  
-//   for (var i = 0; i < dots.length; i++){
-//     dots[i].classList.remove('active');
-//   }
-  
-//   dots[page - 1].classList.add('active');
-  
-//   for (var i = offset; i < offset + perPage; i++) {
-//     if ( images[i] ) {
-//       var template = document.createElement('div');
-//       var title = document.createElement('p');
-//       var titleText = document.createTextNode(images[i].title);
-//       var img = document.createElement('img');
-      
-//       template.classList.add('template')
-//       img.setAttribute("src", images[i].source);
-//       img.setAttribute('alt', images[i].title);
-
-//       title.appendChild(titleText);
-//       template.appendChild(img);
-//       template.appendChild(title);
-//       gallery.appendChild(template);      
-//     }
-//   }
-  
-//   // Animate images
-//   var galleryItems = document.querySelectorAll('.template')
-//   for (var i = 0; i < galleryItems.length; i++) {
-//     var onAnimateItemIn = animateItemIn(i);
-//     setTimeout(onAnimateItemIn, i * 100);
-//   }
-  
-//   function animateItemIn(i) {
-//     var item = galleryItems[i];
-//     return function() {
-//       item.classList.add('animate');
-//     }
-//   }
-  
-//   // Update page indicator
-//   pageIndicator.textContent = "Page " + page + " of " + pages;
-  
-// }
-
-// showImages();
+window.onload = function() {
+    changePage(1);
+};

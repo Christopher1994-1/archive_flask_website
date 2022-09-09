@@ -8,6 +8,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 import mysql.connector
 from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
 from flask_site.models import Members, Images
+from flask_paginate import Pagination, get_page_parameter
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # functions routes may need
@@ -41,10 +42,6 @@ def index():
 @login_required
 def search_images():
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-    # TODO gets names of images and pass them on
-    # filenames = os.path.splitext(pics)[0]
-
-
     return render_template('search_images.html', pics=pics)
 
 
