@@ -42,7 +42,8 @@ def index():
 @login_required
 def search_images():
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-    return render_template('search_images.html', pics=pics)
+    number_of_pics = len(pics)
+    return render_template('search_images.html', pics=pics, number_of_pics=number_of_pics)
 
 
 # route to add data page
