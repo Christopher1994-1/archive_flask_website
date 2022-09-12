@@ -55,6 +55,7 @@
 <div class="s-container">
     <h1 class="s-heading">Type to search images</h1>
     <input type="text" id="search-box" placeholder="Search {{ number_of_pics }} images:">
+            {{ pagination.info }}
         <div id="paginated-list" aria-live="polite">
         <div class="s-image-container">
 
@@ -63,7 +64,7 @@
                 <!-- TODO adding image to search image folder and see if it updates -->
                 <!-- TODO add enough images to see if pagingtion takes place-->
                 <div class="s-image" data-title="{{ pic.replace('.jpg', '') }}">
-                    <img src="/static/images/search_images/{{ pic }}" alt="">
+                    <img id="lol" src="/static/images/search_images/{{ pic }}" alt="">
                     <h3>{{pic.replace('.jpg', '')}}</h3>
                 </div>
                 {% endfor %}
@@ -71,10 +72,16 @@
                  </div>
                  </div>
         </div>
-        <div id="listingTable"></div>
+<br>
+        <div>
+            <h1>hereL</h1>
+            {{ pagination.info }}
+            {{ pagination.links }}
+        </div>
+        <!-- <div id="listingTable"></div>
         <a href="javascript:prevPage()" id="btn_prev">Prev</a>
         <a href="javascript:nextPage()" id="btn_next">Next</a>
-        page: <span id="page"></span>
+        page: <span id="page"></span> -->
 
 <script src="/static/js/search_images.js"></script>
 </body>
