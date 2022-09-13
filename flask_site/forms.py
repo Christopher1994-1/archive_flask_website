@@ -3,7 +3,7 @@ from math import remainder
 from xml.dom import ValidationErr
 from xmlrpc.client import Boolean
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators, FileField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators, FileField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, email_validator, ValidationError
 import email_validator
 import mysql.connector
@@ -42,4 +42,13 @@ class AdminLogin(FlaskForm):
 # Class for adding images
 class AddingImages(FlaskForm):
     image = FileField("Image File")
+    submit = SubmitField("Upload")
+
+
+
+# class for adding images to images db
+class AddingPictures(FlaskForm):
+    name = StringField('Image Name:', [validators.DataRequired()])
+    img_path = FileField("Image File")
+    description = TextAreaField("Add Description:")
     submit = SubmitField("Upload")

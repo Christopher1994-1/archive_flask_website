@@ -15,8 +15,8 @@ class Images(db.Model):
     __bind_key__ = 'images'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
-    img = db.Column(db.BLOB, nullable=True)
-    mimetype = db.Column(db.Text, nullable=False)
+    path = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text, nullable=False)
 
 
 @login_manager.user_loader

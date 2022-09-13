@@ -2,7 +2,7 @@ from email.mime import image
 from math import pi
 import mimetypes
 from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
-from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin
+from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
@@ -38,12 +38,6 @@ def index():
     return render_template("index.html")
 
 
-picures = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-
-def get_pics(offset=0, per_page=1):
-    return picures[offset: offset+per_page]
-
-
 # route to search images page
 @app.route('/search_images.html')
 @login_required
@@ -51,17 +45,7 @@ def search_images():
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
     number_of_pics = len(pics) # number of pics for search images placeholder
 
-    page, per_page, offset = get_page_args(page_parameter="page", per_page_parameter="per_page")
-    total = len(pics)
-    pagination_images = get_pics(offset=offset, per_page=per_page)
-    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap5', show_single_page=True)
-
-    return render_template('search_images.html', pics=pics, 
-            number_of_pics=number_of_pics, 
-            picures=pagination_images, 
-            per_page=per_page, 
-            page=page, 
-            pagination=pagination, )
+    return render_template('search_images.html', pics=pics, number_of_pics=number_of_pics)
 
 
 # route to add data page
@@ -174,3 +158,12 @@ def admin_add_images():
     # TODO add code to take image uploaded here and add it to the search_images folder, and have an option
     # to choose which folder you want to add too
     return render_template('admin_add_images.html', form=form)
+
+
+
+
+# Test route
+
+@app.route('/test.html', methods=["POST", "GET"])
+def test():
+    return render_template('test.html')

@@ -3,11 +3,16 @@ import mysql.connector
 import os
 import sqlite3
 
-path = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
-ma = os.listdir(path)
+# path = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
+# ma = os.listdir(path)
+# print(ma)
 
-for filename in ma:
-    print(os.path.splitext(filename)[0])
+# for filename in ma:
+#     print(os.path.splitext(filename)[0])
+
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+print(APP_ROOT)
 
 # my = os.path.dirname(os.path.abspath(__file__))
 # print("this is what it prints" + my)

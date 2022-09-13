@@ -17,12 +17,11 @@ searchBox.oninput = () =>{
 };
 
 
-
 var current_page = 1;
 var records_per_page = 3;
 
 var objJson = [
-    { src: "/static/images/search_images/1.jpg"} ,]; 
+    { src: "{{ pic.n }}"} ,]; 
     // Can be obtained from another source, such as your objJson variable
 
 function prevPage()
