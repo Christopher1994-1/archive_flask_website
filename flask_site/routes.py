@@ -1,6 +1,4 @@
-from email.mime import image
-from math import pi
-import mimetypes
+import math
 from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
 from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures
 from flask_site import app
@@ -166,4 +164,9 @@ def admin_add_images():
 
 @app.route('/test.html', methods=["POST", "GET"])
 def test():
-    return render_template('test.html')
+
+    per_page = 9
+    pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
+    number_of_pics = len(pics) # number of pics for search images placeholder
+
+    return render_template('test.html', pics=pics, number_of_pics=number_of_pics)
