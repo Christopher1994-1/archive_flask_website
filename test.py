@@ -2,6 +2,7 @@ from unicodedata import name
 import mysql.connector
 import os
 import sqlite3
+from Google import Create_Service
 
 # path = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
 # ma = os.listdir(path)
@@ -11,8 +12,8 @@ import sqlite3
 #     print(os.path.splitext(filename)[0])
 
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-print(APP_ROOT)
+# APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+# print(APP_ROOT)
 
 # my = os.path.dirname(os.path.abspath(__file__))
 # print("this is what it prints" + my)

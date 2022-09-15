@@ -78,7 +78,13 @@
 
     {% endblock content %}
 
-    <h1 id="maina"></h1>
+    {{pagination.links}}
+    {% for pic in items %}
+        <img src="{{pic}}" alt="">
+    {%endfor%}
+    {{pagination.info}}
+
+    <h1 id="maina">lol</h1>
 
     <script type="module" src="/static/js/search_images.js"></script>
 </body>

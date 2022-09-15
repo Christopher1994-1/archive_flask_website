@@ -165,8 +165,13 @@ def admin_add_images():
 @app.route('/test.html', methods=["POST", "GET"])
 def test():
 
-    per_page = 9
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
     number_of_pics = len(pics) # number of pics for search images placeholder
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=len(pics), search=search, items=pics)
 
-    return render_template('test.html', pics=pics, number_of_pics=number_of_pics)
+    return render_template('test.html', pics=pics, number_of_pics=number_of_pics, pagination=pagination)

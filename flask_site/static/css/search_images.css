@@ -243,8 +243,9 @@
   }
 
   main .list{
-    width: 100px;
+    width: 1000px;
     background-color: #FFF;
     border: 1px solid #CCC;
     margin-top: 23px;
+    margin: auto;
   }
