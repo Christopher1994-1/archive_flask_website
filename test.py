@@ -2,32 +2,34 @@ from unicodedata import name
 import mysql.connector
 import os
 import sqlite3
-from Google import Create_Service
+from flask_site.models import Images, Members
+from flask_sqlalchemy import SQLAlchemy
 
-# path = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
-# ma = os.listdir(path)
-# print(ma)
+images = Images.query.all()
 
-# for filename in ma:
-#     print(os.path.splitext(filename)[0])
+for image in images:
+    print(image.url)
 
 
-# APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-# print(APP_ROOT)
+print()
 
-# my = os.path.dirname(os.path.abspath(__file__))
-# print("this is what it prints" + my)
+m = Members.query.all()
+for ma in m:
+    print(ma)
 
 # mysql_pass = os.environ.get('my_thing')
 
 # fun_db = mysql.connector.connect(
 #         host="localhost",
 #         user="root",
-#         passwd=f"{mysql_pass}"
+#         passwd=f"{mysql_pass}",
+#         database="images"
 #     )
 
 # my_cursor = fun_db.cursor()
-# my_cursor.execute("CREATE DATABASE images")
+# # my_cursor.execute("CREATE DATABASE images")
+# for i in my_cursor.execute("SELECT * FROM images.images;"):
+#     print(i)
 
 # print("No Errors")
 

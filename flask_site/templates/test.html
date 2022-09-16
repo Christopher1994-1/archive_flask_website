@@ -53,38 +53,39 @@
 
 {% block content %}
 <div class="s-container">
-    <h1 class="s-heading">Type to search images</h1>
-    <input type="text" id="search-box" placeholder="Search {{ number_of_pics }} images:">
+    <h1 class="s-heading">Type to Search Images</h1>
+    <input type="text" id="search-box" placeholder="Search {{ images.total }} images:">
         <div id="paginated-list" aria-live="polite">
         <div class="s-image-container">
 
 
-                {% for pic in pics %}
-                <div class="s-image" data-title="{{ pic.replace('.jpg', '') }}">
-                    <img id="lol" src="/static/images/search_images/{{ pic }}" alt="">
-                    <h3>{{pic.replace('.jpg', '')}}</h3>
+                {% for image in images.items %}
+                <div class="s-image" data-title="{{ image.name }}">
+                    <img id="lol" src="{{ image.url }}" alt="">
+                    <h3>{{ image.name }}</h3>
                 </div>
                 {% endfor %}
  
                  </div>
                  </div>
         </div>
+        {% endblock content %}
 
-        <h1 id="things">Things</h1>
-        <main>
-            <div class="list" id="list"></div>
-            <div class="page-numbers" id="pagination"></div>
-        </main>
+        <div id="bottom-nav">
+        {% for page_number in images.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_number %}
+                {% if images.page == page_number %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>
+            {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>
+            {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </div>
 
-    {% endblock content %}
 
-    {{pagination.links}}
-    {% for pic in items %}
-        <img src="{{pic}}" alt="">
-    {%endfor%}
-    {{pagination.info}}
-
-    <h1 id="maina">lol</h1>
 
     <script type="module" src="/static/js/search_images.js"></script>
 </body>

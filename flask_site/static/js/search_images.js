@@ -15,19 +15,3 @@ searchBox.oninput = () =>{
         }
     });
 };
-
-// ***************************************************************************************************
-// pagination code:
-
-// const fs = require('fs'); // maybe change to const instead
-// var path = "C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images"
-// var files = fs.readdirSync(path);
-// console.log(files)
-
-
-var files = ["lol", "main", "pop"]
-
-for (i in files){
-    document.getElementById('maina').innerHTML = i
-
-};

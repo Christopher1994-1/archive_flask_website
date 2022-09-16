@@ -9,15 +9,8 @@ from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
 from flask_site.models import Members, Images
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
+import cloudinary
 
-# functions routes may need
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # website routes
@@ -152,9 +145,20 @@ def sign_upp_example():
 # route for admin to add images
 @app.route('/admin_add_images.html', methods=["POST", "GET"])
 def admin_add_images():
-    form = AddingImages()
-    # TODO add code to take image uploaded here and add it to the search_images folder, and have an option
-    # to choose which folder you want to add too
+    form = AddingPictures()
+    image_name = form.name.data
+    image_url = form.img_url.data
+    image_description = form.description.data
+
+    new_image = Images(name=image_name, url=image_url, description=image_description)
+    try:
+         db.session.add(new_image)
+         db.session.commit()
+         flash("Image Added Succeesfully!")
+         # TODO look up how to clear entered data in box when successfully added!
+    except:
+        flash("There was an error adding the image")
+
     return render_template('admin_add_images.html', form=form)
 
 
@@ -167,11 +171,7 @@ def test():
 
     pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
     number_of_pics = len(pics) # number of pics for search images placeholder
-    search = False
-    q = request.args.get('q')
-    if q:
-        search = True
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    pagination = Pagination(page=page, total=len(pics), search=search, items=pics)
+    page = request.args.get('page', default=1, type=int)
+    images = Images.query.paginate(per_page=9, page=page)
 
-    return render_template('test.html', pics=pics, number_of_pics=number_of_pics, pagination=pagination)
+    return render_template('test.html', number_of_pics=number_of_pics, images=images)

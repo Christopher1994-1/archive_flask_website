@@ -49,6 +49,6 @@ class AddingImages(FlaskForm):
 # class for adding images to images db
 class AddingPictures(FlaskForm):
     name = StringField('Image Name:', [validators.DataRequired()])
-    img_path = FileField("Image File")
+    img_url = StringField("Image URL:")
     description = TextAreaField("Add Description:")
     submit = SubmitField("Upload")
