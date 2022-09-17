@@ -52,3 +52,12 @@ class AddingPictures(FlaskForm):
     img_url = StringField("Image URL:")
     description = TextAreaField("Add Description:")
     submit = SubmitField("Upload")
+
+
+# class for images search
+class SearchImages(FlaskForm):
+    searched = StringField('Search', [validators.DataRequired()])
+    submit = SubmitField('Submit')
+
+    # TODO make custom validator for searched var so user will be hit with an error if they search for something that
+    # isn't in the db

@@ -1,6 +1,6 @@
 import math
 from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
-from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures
+from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures, SearchImages
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
@@ -30,13 +30,18 @@ def index():
 
 
 # route to search images page
-@app.route('/search_images.html')
+@app.route('/search_images.html', methods=["POST", "GET"])
 @login_required
 def search_images():
-    pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-    number_of_pics = len(pics) # number of pics for search images placeholder
+    page = request.args.get('page', default=1, type=int)
+    images = Images.query.paginate(per_page=9, page=page)
+    form = SearchImages()
+    data = Images.query
+    if form.validate_on_submit():
+        pass
 
-    return render_template('search_images.html', pics=pics, number_of_pics=number_of_pics)
+
+    return render_template('search_images.html', form=form, images=images)
 
 
 # route to add data page
@@ -168,10 +173,22 @@ def admin_add_images():
 
 @app.route('/test.html', methods=["POST", "GET"])
 def test():
-
-    pics = os.listdir('C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images')
-    number_of_pics = len(pics) # number of pics for search images placeholder
     page = request.args.get('page', default=1, type=int)
     images = Images.query.paginate(per_page=9, page=page)
+    form = SearchImages()
+    if form.validate_on_submit():
+        return render_template('search.html')
+        
 
-    return render_template('test.html', number_of_pics=number_of_pics, images=images)
+    return render_template('test.html', images=images, form=form)
+
+
+# image page search route
+@app.route('/search', methods=["POST", "GET"])
+def search():
+    form = SearchImages()
+    searched_query = form.searched.data
+    page = request.args.get('page', default=1, type=int)
+    images = Images.query.filter_by(name=searched_query).paginate(per_page=9, page=page)
+
+    return render_template('search.html', searched_query=searched_query, images=images, form=form)

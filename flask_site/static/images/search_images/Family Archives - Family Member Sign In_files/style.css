@@ -1,0 +1,124 @@
+#main-header{
+    text-align: center;
+}
+
+.navbar-brand{
+    color: aliceblue;
+}
+
+.nav-link{
+    color: aliceblue;
+
+}
+
+#sec-home:hover{
+    color: black;
+}
+
+#sec-home{
+    color: aliceblue;
+}
+
+#nav-bar-btn{
+    background-color:darkgray;
+    border-color: black;
+    color: black;
+}
+
+#main-navbar{
+    width: 1000px;
+    margin: auto;
+    border-radius: 20px;
+}
+
+#carouselExampleSlidesOnly{
+    width: 1000px;
+    margin: auto;
+}
+
+#card-group-css{
+    width: 1000px;
+    margin: auto;
+}
+
+/* #card-image-1{
+    width: 350px;
+    height: 300px;
+}
+
+#card-image-2{
+    width: 350px;
+    height: 300px;
+}
+
+#card-image-3{
+    width: 350px;
+    height: 300px;
+} */
+
+
+#ending{
+    margin-left: 200px;
+}
+
+.about-lorem{
+    text-align: center;
+    width: 900px;
+    margin: auto;
+}
+
+.under-nav-header{
+    text-align: center;
+}
+
+#search-bar-images-page{
+    margin-left: 485px;
+}
+
+#search-images{
+    width: 350px;
+}
+
+#btn-search-image{
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+}
+
+#btn-search-image:hover{
+    background-color: black;
+    color: crimson;
+}
+
+#login_in_warning{
+    text-align: center;
+    width: 1000px;
+    color: crimson;
+    font-weight: bold;
+    margin: auto;
+}
+
+#wrapperDiv{
+    width: 1000px;
+    margin: auto;
+
+}
+
+#div1{
+    text-align: center;
+}
+
+#div2{
+    width: 980px;
+    text-align: right;
+    text-decoration: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+/* 
+<div id="wrapperDiv">
+<div id="div1" style="padding:20px;background-color:#decddd;float:left">Div tag 1</div>
+<div id="div2" style="padding:20px;background-color:#cedddd;float:left">Div tag 2</div>
+</div> */

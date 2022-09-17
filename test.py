@@ -1,21 +1,17 @@
-from unicodedata import name
 import mysql.connector
 import os
 import sqlite3
-from flask_site.models import Images, Members
+from flask_site.models import Images, Members 
 from flask_sqlalchemy import SQLAlchemy
-
-images = Images.query.all()
-
-for image in images:
-    print(image.url)
+from flask_site import db
 
 
-print()
 
-m = Members.query.all()
-for ma in m:
-    print(ma)
+data = Images.query
+ma = list(data)
+
+if "2" in ma:
+    print('True')
 
 # mysql_pass = os.environ.get('my_thing')
 
@@ -28,7 +24,7 @@ for ma in m:
 
 # my_cursor = fun_db.cursor()
 # # my_cursor.execute("CREATE DATABASE images")
-# for i in my_cursor.execute("SELECT * FROM images.images;"):
+# for i in my_cursor.execute("SELECT * FROM images.images WHERE images.name = ?", [search]):
 #     print(i)
 
 # print("No Errors")

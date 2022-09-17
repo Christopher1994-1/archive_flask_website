@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://127.0.0.1:5000/user_login.html?next=%2Fsearch_images.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Family Archives - Family Member Sign In</title>
+    <link href="./Family Archives - Family Member Sign In_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="./Family Archives - Family Member Sign In_files/style.css">
+    <link rel="stylesheet" href="./Family Archives - Family Member Sign In_files/admin_override.css">
+    <link rel="stylesheet" href="./Family Archives - Family Member Sign In_files/sign_up_page.css">
+    <link rel="icon" href="http://127.0.0.1:5000/static/images/lighModeV.ico">
+</head>
+<body>
+
+<h1 id="main-header">Family Member Sign In:</h1>
+<script src="./Family Archives - Family Member Sign In_files/bootstrap.bundle.min.js.download" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+<nav id="main-navbar" class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://127.0.0.1:5000/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a id="sec-home" class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/user_login.html?next=%2Fsearch_images.html#">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5000/family_tree.html">Tree</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://127.0.0.1:5000/user_login.html?next=%2Fsearch_images.html#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="http://127.0.0.1:5000/add_data.html">Add Data</a></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:5000/about.html">About</a></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:5000/admin_override.html">Admin</a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:5000/sign_upp_example.html">Sign up</a></li>
+                    </ul>
+
+            </li></ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button id="nav-bar-btn" class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<br>
+
+<p id="login_in_warning">In order to have full access to this website you must sign up or if you are already signed up and approved you can login in. If you are not signed up you can register <a href="http://127.0.0.1:5000/sign_upp_example.html">here</a></p>
+
+
+
+
+    
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Please log in to access this page.</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+
+<div class="content-section">
+    <form method="POST" action="http://127.0.0.1:5000/user_login.html?next=%2Fsearch_images.html">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="IjZmM2IzMjUzMGFhMDRhMjc0NGM0NjExYjAwYjVlYjgxZDAxZTE2Njki.YyVkpQ.T6GRnPotbc9Oh2mtvIUYwpMFKnA">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Family Member Login</legend>
+
+            <!-- admin email login form field -->
+            <div class="form-group">
+                <label class="form-control-label" for="email">Email</label>
+
+                
+                <input class="form-control form-control-lg" id="email" name="email" required="" type="text" value="">
+                
+                </div>
+
+                            <!-- admin password login form field -->
+            <div class="form-group">
+                <label class="form-control-label" for="first_password">Password:</label>
+
+                
+                <input class="form-control form-control-lg" id="first_password" minlength="8" name="first_password" required="" type="password" value="">
+                
+                </div>
+            </fieldset>
+            <div class="form-control">
+                <input class="registerbtn" id="register" name="register" type="submit" value="Login">
+            </div>
+        </form>
+        <div class="admin-login-underthing">
+            <small class="text-muted">
+                Don't Remember Your Info? <a href="http://127.0.0.1:5000/user_login.html?next=%2Fsearch_images.html#">Click Here:</a>
+            </small>
+        </div>
+        
+    </div>
+    
+    
+    
+    
+
+
+
+</body></html>

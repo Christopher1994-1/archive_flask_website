@@ -51,17 +51,63 @@
 
 <br>
 
-{% block content %}
+
 <div class="s-container">
     <h1 class="s-heading">Type to Search Images</h1>
-    <input type="text" id="search-box" placeholder="Search {{ images.total }} images:">
+        <form id="search-box-thing" method="POST" action="{{ url_for('search') }}">
+            <!-- <input type="text" id="search-box" name="searched" placeholder="Search {{ images.total }} images:"> -->
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    {% for message in get_flashed_messages() %}
+        
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    
+                <div id="search-box-and-submit">
+                    <div class="form-group">
+            
+                        {% if form.searched.errors %}
+                            {{ form.searched(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.searched.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                    </div>
+                        {% else %}
+                        {{ form.searched(class="images-search-box", placeholder="Search Images") }}
+                        {% endif %}
+        
+                    </div>
+        
+                    <div class="form-group">
+                
+                        {% if form.submit.errors %}
+                            {{ form.submit(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.submit.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                    </div>
+                        {% else %}
+                        {{ form.submit(class="images-search-box-submit") }}
+                        {% endif %}
+                        </div>
+                    </div>
+        
+        </form>
+
+
+
         <div id="paginated-list" aria-live="polite">
         <div class="s-image-container">
 
 
                 {% for image in images.items %}
                 <div class="s-image" data-title="{{ image.name }}">
-                    <img id="lol" src="{{ image.url }}" alt="">
+                    <img class="main-image" src="{{ image.url }}" alt="{{ image.description }}">
                     <h3>{{ image.name }}</h3>
                 </div>
                 {% endfor %}
@@ -69,7 +115,19 @@
                  </div>
                  </div>
         </div>
-        {% endblock content %}
+
+        <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+    <span class="close">&times;</span>
+  
+        <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+  
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+    </div>
 
         <div id="bottom-nav">
         {% for page_number in images.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
