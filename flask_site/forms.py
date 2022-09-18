@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo, email_valid
 import email_validator
 import mysql.connector
 import os
-from flask_site.models import Members
+from flask_site.models import Members, Images
 
 # TODO look through db to see if something exists
 
