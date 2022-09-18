@@ -7,11 +7,11 @@ from flask_site import db
 
 
 
-data = Images.query
-ma = list(data)
+# data = Images.query
+# ma = list(data)
 
-if "2" in ma:
-    print('True')
+# if "2" in ma:
+#     print('True')
 
 # mysql_pass = os.environ.get('my_thing')
 
@@ -35,7 +35,7 @@ if "2" in ma:
 # conn = db.cursor()
 
 
-# conn.execute("INSERT INTO passwords VALUES ('Ancestry', 'Kirko Email', 'Ancestry0098@')")
+# conn.execute("INSERT INTO passwords VALUES ('Reddit', 'Kirk8829', 'Reddit0098Cuck')")
 
 # for row in conn.execute("SELECT * FROM passwords"):
 #     print(row)

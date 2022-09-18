@@ -98,18 +98,15 @@
         </form>
 
 
-
+    {% if images.items %}
         <div id="paginated-list" aria-live="polite">
         <div class="s-image-container">
-
-
                 {% for image in images.items %}
                 <div class="s-image" data-title="{{ image.name }}">
                     <img class="main-image" src="{{ image.url }}" alt="{{ image.description }}">
                     <h3>{{ image.name }}</h3>
                 </div>
                 {% endfor %}
- 
                  </div>
                  </div>
         </div>
@@ -139,6 +136,13 @@
                 ...
             {% endif %}
         {% endfor %}
+    
+    {% else %}
+        <h1>No search results for {{ searched_query }}</h1>
+    
+    {% endif %}
+
+
     </div>
 
 
