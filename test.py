@@ -19,13 +19,12 @@ from flask_site import db
 #         host="localhost",
 #         user="root",
 #         passwd=f"{mysql_pass}",
-#         database="images"
 #     )
 
 # my_cursor = fun_db.cursor()
-# # my_cursor.execute("CREATE DATABASE images")
-# for i in my_cursor.execute("SELECT * FROM images.images WHERE images.name = ?", [search]):
-#     print(i)
+# my_cursor.execute("CREATE DATABASE approval")
+# # for i in my_cursor.execute("SELECT * FROM images.images WHERE images.name = ?", [search]):
+# #     print(i)
 
 # print("No Errors")
 

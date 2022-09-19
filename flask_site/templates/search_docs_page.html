@@ -51,8 +51,8 @@
 <br>
 
 <div class="s-container">
-    <h1 class="s-heading">Type to Search Images</h1>
-        <form id="search-box-thing" method="POST" action="{{ url_for('search') }}">
+    <h1 class="s-heading">Type to Search Documents</h1>
+        <form id="search-box-thing" method="POST" action="{{ url_for('search_docs_page') }}">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
                     {% for message in get_flashed_messages() %}
@@ -97,13 +97,13 @@
         </form>
 
 
-    {% if images.items %}
+    {% if documents.items %}
         <div id="paginated-list" aria-live="polite">
         <div class="s-image-container">
-                {% for image in images.items %}
-                <div class="s-image" data-title="{{ image.name }}">
-                    <img class="main-image" src="{{ image.url }}" alt="{{ image.description }}">
-                    <h3>{{ image.name }}</h3>
+                {% for doc in documents.items %}
+                <div class="s-image" data-title="{{ doc.name }}">
+                    <img class="main-image" src="{{ doc.url }}" alt="{{ doc.description }}">
+                    <h3>{{ doc.name }}</h3>
                 </div>
                 {% endfor %}
                  </div>
@@ -124,9 +124,9 @@
     </div>
 
         <div id="bottom-nav">
-        {% for page_number in images.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% for page_number in documents.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_number %}
-                {% if images.page == page_number %}
+                {% if documents.page == page_number %}
                     <a class="btn btn-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>
             {% else %}
                     <a class="btn btn-outline-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>

@@ -19,6 +19,25 @@ class Images(db.Model):
     description = db.Column(db.Text, nullable=False)
 
 
+
+class Documents(db.Model):
+    __bind_key__ = 'documents'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    url = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text, nullable=False)
+
+
+class Approval(db.Model):
+    __bind_key__ = 'approval'
+    id = db.Column(db.Integer, primary_key=True)
+    a_name = db.Column(db.String(200), nullable=False)
+    a_address = db.Column(db.String(200), nullable=False)
+    a_dob = db.Column(db.String(50), nullable=False)
+    a_email = db.Column(db.String(200), nullable=False)
+    a_password = db.Column(db.String(200), nullable=False)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return Members.query.get(int(user_id))

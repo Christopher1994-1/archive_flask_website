@@ -2,6 +2,11 @@
 /* I made a separate CSS file for the sign up page because the form I used and the following CSS attached to input
 messed with other elements on other pages. */
 
+
+#user-approval {
+  width: 1000px;
+}
+
 #sign-up-info-header{
     text-align: center;
     width: 1000px;
@@ -125,3 +130,4 @@ messed with other elements on other pages. */
     text-align: center;
     margin: auto;
   }
+

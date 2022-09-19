@@ -51,25 +51,45 @@
 </nav>
 
 <br>
+<br>
 
+    <table id="user-approval" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Full Name:</th>
+                <th>Address:</th>
+                <th>DOB:</th>
+                <th>Email:</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
 
-<div id="admin-page-div">
-    <h3 class="admin-headers">Change Admin Information:</h3>
-    <a href="{{ url_for('change_admin_info') }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-    <hr>
+        <tbody>
+            {% for user in users.items %}
+                <tr>
+                    <td>{{ user.a_name }}</td>
+                    <td>{{ user.a_address }}</td>
+                    <td>{{ user.a_dob }}</td>
+                    <td>{{ user.a_email }}</td>
+                    <td><a href="#">approve</a></td>
+                    <td><a href="#">deny</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
 
-    <h3 class="admin-headers">Add Images:</h3>
-    <a href="{{ url_for('admin_add_images') }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-    <hr>
+        <tfoot>
+            <tr>
+                <th>Full Name:</th>
+                <th>Address:</th>
+                <th>DOB:</th>
+                <th>Email:</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
 
-    <h3 class="admin-headers">Change Users:</h3>
-    <a href="#"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-    <hr>
-
-    <h3 class="admin-headers">Approve Users:</h3>
-    <a href="{{ url_for('user_approval') }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-    <hr>
-</div>
 
 </body>
 </html>

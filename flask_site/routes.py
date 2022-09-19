@@ -6,7 +6,7 @@ import os
 from flask_login import login_user, current_user, logout_user, login_required
 import mysql.connector
 from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
-from flask_site.models import Members, Images
+from flask_site.models import Approval, Members, Images, Documents, Approval
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
 import cloudinary
@@ -42,6 +42,33 @@ def search_images():
 
 
     return render_template('search_images.html', form=form, images=images)
+
+
+# route to search docs page : for docs db
+@app.route('/search_docs.html', methods=["POST", "GET"])
+@login_required
+def search_docs():
+    page = request.args.get('page', default=1, type=int)
+    documents = Documents.query.paginate(per_page=9, page=page)
+    form = SearchImages()
+    data = Documents.query
+    if form.validate_on_submit():
+        pass
+
+
+    return render_template('search_docs.html', form=form, documents=documents)
+
+
+# route to input search docs page
+@app.route('/search_docs_page.html', methods=["POST", "GET"])
+def search_docs_page():
+    form = SearchImages()
+    searched_query = form.searched.data
+    page = request.args.get('page', default=1, type=int)
+    documents = Documents.query.filter_by(name=searched_query).paginate(per_page=9, page=page)
+
+    return render_template('search_docs_page.html', searched_query=searched_query, documents=documents, form=form)
+
 
 
 # route to add data page
@@ -135,17 +162,19 @@ def sign_upp_example():
             address = form.address.data
             dob = form.dob.data
             email = form.form_email.data
-            new_member = Members(name=full_name, address=address, DOB=dob, email=email, password=hashed_password)
-            user = Members.query.filter(Members.email==email).first()
+            new_member = Approval(a_name=full_name, a_address=address, a_dob=dob, a_email=email, a_password=hashed_password)
+            user = Approval.query.filter(Approval.a_email==email).first()
             if user != None:
                 flash("Please use another email")
             
             else:
+                flash("Your account is now awaiting approval:")
                 db.session.add(new_member)
                 db.session.commit()
-                return redirect(url_for('sign_upp_success'))
+                return redirect(url_for('sign_upp_example'))
         return render_template('sign_upp_example.html', form=form)
             
+
 
 # route for admin to add images
 @app.route('/admin_add_images.html', methods=["POST", "GET"])
@@ -156,13 +185,27 @@ def admin_add_images():
     image_description = form.description.data
 
     new_image = Images(name=image_name, url=image_url, description=image_description)
-    try:
-         db.session.add(new_image)
-         db.session.commit()
-         flash("Image Added Succeesfully!")
-         # TODO look up how to clear entered data in box when successfully added!
-    except:
-        flash("There was an error adding the image")
+    new_doc = Documents(name=image_name, url=image_url, description=image_description)
+    selected = request.form.get('checkbox')
+
+
+    if form.validate_on_submit() and selected == "1":
+        try:
+            db.session.add(new_image)
+            db.session.commit()
+            flash("Image Added Succeesfully!")
+            return redirect(url_for('admin_add_images'))
+        except:
+            flash("There was an error adding the image")
+
+    elif form.validate_on_submit() and selected == "2":
+        try:
+            db.session.add(new_doc)
+            db.session.commit()
+            flash("Document Added Succeesfully!")
+            return redirect(url_for('admin_add_images'))
+        except:
+            flash("There was an error adding the document")
 
     return render_template('admin_add_images.html', form=form)
 
@@ -183,7 +226,7 @@ def test():
     return render_template('test.html', images=images, form=form)
 
 
-# image page search route
+# image page search route : for images db
 @app.route('/search', methods=["POST", "GET"])
 def search():
     form = SearchImages()
@@ -192,3 +235,12 @@ def search():
     images = Images.query.filter_by(name=searched_query).paginate(per_page=9, page=page)
 
     return render_template('search.html', searched_query=searched_query, images=images, form=form)
+
+
+
+# route for user approval
+@app.route('/user_approval.html', methods=["POST", "GET"])
+def user_approval():
+    page = request.args.get('page', default=1, type=int)
+    users = Approval.query.paginate(per_page=5, page=page)
+    return render_template('user_approval.html', users=users)

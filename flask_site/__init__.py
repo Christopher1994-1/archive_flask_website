@@ -23,7 +23,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{mysql_psw}@local
 
 app.config['SQLALCHEMY_BINDS'] = {
     'admin_info': f'mysql+pymysql://root:{mysql_psw}@localhost:3306/admin_info',
-    'images' : f'mysql+pymysql://root:{mysql_psw}@localhost:3306/images'
+    'images' : f'mysql+pymysql://root:{mysql_psw}@localhost:3306/images',
+    'documents' : f'mysql+pymysql://root:{mysql_psw}@localhost:3306/documents',
+    'approval' : f'mysql+pymysql://root:{mysql_psw}@localhost:3306/approval',
 }
 
 
