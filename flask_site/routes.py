@@ -237,6 +237,14 @@ def search():
     return render_template('search.html', searched_query=searched_query, images=images, form=form)
 
 
+# TODO make sure you have a way to stop logined in users from going to the login page/sign up pageq1
+
+
+def user_approve(user_id):
+    print("function worked " + str(user_id))
+
+def user_deny(user_id):
+    print("this function also worked " + str(user_id))
 
 # route for user approval
 @app.route('/user_approval.html', methods=["POST", "GET"])
@@ -244,4 +252,5 @@ def user_approval():
     page = request.args.get('page', default=1, type=int)
     users = Approval.query.paginate(per_page=5, page=page)
 
-    return render_template('user_approval.html', users=users,)
+    return render_template('user_approval.html', users=users, user_approve=user_approve, user_deny=user_deny)
+

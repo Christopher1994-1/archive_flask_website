@@ -44,11 +44,11 @@ from flask_site import routes
 
 # functions
 
-def user_approve(user_id):
-    print("function worked" + str(user_id))
+# def user_approve(user_id):
+#     print("function worked " + str(user_id))
 
-def user_deny(user_id):
-    print("this function also worked" + str(user_id))
+# def user_deny(user_id):
+#     print("this function also worked " + str(user_id))
 
-app.jinja_env.globals.update(user_approve=user_approve)
-app.jinja_env.globals.update(user_deny=user_deny)
+# app.jinja_env.globals.update(user_approve=user_approve)
+# app.jinja_env.globals.update(user_deny=user_deny)
