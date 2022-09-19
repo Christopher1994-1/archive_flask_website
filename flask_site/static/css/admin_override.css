@@ -97,3 +97,27 @@ span.psw {
   width: 1150px;
   margin: auto;
 }
+
+#approve-user-btn {
+  border: none;
+  color: rgb(12, 209, 12);
+  font-weight: bold;
+}
+
+#approve-user-btn:hover {
+  color: darkgreen;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#deny-user-btn{
+  border: none;
+  color: red;
+  font-weight: bold;
+}
+
+#deny-user-btn:hover{
+  color: rgb(131, 29, 22);
+  font-weight: bold;
+  text-decoration: underline;
+}

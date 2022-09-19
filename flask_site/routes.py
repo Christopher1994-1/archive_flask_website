@@ -243,4 +243,5 @@ def search():
 def user_approval():
     page = request.args.get('page', default=1, type=int)
     users = Approval.query.paginate(per_page=5, page=page)
-    return render_template('user_approval.html', users=users)
+
+    return render_template('user_approval.html', users=users,)
