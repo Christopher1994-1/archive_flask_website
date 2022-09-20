@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_image_search import ImageSearch
 from werkzeug.utils import secure_filename
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'user_login'
 UPLOAD_FOLDER = 'C:/Users/yklac/Desktop/projects/git_projects/flask_website/flask_site/static/images/search_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+mail = Mail(app)
 
 # environment variables
 mysql_psw = os.environ.get('my_thing')

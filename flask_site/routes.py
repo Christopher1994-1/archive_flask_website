@@ -4,12 +4,11 @@ from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLog
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
-import mysql.connector
 from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
 from flask_site.models import Approval, Members, Images, Documents, Approval
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
-import cloudinary
+from flask_site import mail
 
 
 
@@ -237,20 +236,64 @@ def search():
     return render_template('search.html', searched_query=searched_query, images=images, form=form)
 
 
-# TODO make sure you have a way to stop logined in users from going to the login page/sign up pageq1
-
-
-def user_approve(user_id):
-    print("function worked " + str(user_id))
-
-def user_deny(user_id):
-    print("this function also worked " + str(user_id))
-
 # route for user approval
 @app.route('/user_approval.html', methods=["POST", "GET"])
 def user_approval():
     page = request.args.get('page', default=1, type=int)
     users = Approval.query.paginate(per_page=5, page=page)
 
-    return render_template('user_approval.html', users=users, user_approve=user_approve, user_deny=user_deny)
+    return render_template('user_approval.html', users=users)
 
+
+
+# route/function for admin to deny user
+@app.route('/deny/<int:id>')
+def deny(id):
+    page = request.args.get('page', default=1, type=int)
+    users = Approval.query.paginate(per_page=5, page=page)
+
+    user_to_del = Approval.query.get_or_404(id)
+
+    try:
+        db.session.delete(user_to_del)
+        db.session.commit()
+        email = user_to_del.a_email
+        name = user_to_del.a_name.split(' ')[0]
+        message = f"Hello {name}\nYou are getting this email because your....."
+
+
+        my_pass = os.environ.get('cej_pass')
+
+        return redirect('/user_approval.html')
+    except:
+        flash('There was an error')
+
+        return render_template('user_approval.html', users=users)
+
+
+# # route/function for admin to approve user
+@app.route('/approve/<int:id>')
+def approve(id):
+    page = request.args.get('page', default=1, type=int)
+    users = Approval.query.paginate(per_page=5, page=page)
+
+    user_to_approve = Approval.query.get_or_404(id)
+
+    try:
+        name = user_to_approve.a_name
+        address = user_to_approve.a_address
+        dob = user_to_approve.a_dob
+        email = user_to_approve.a_email
+        password = user_to_approve.a_password
+        new_member = Members(name=name, address=address, DOB=dob, email=email, password=password)
+        db.session.add(new_member)
+        db.session.commit()
+        
+        dele = Approval.query.get_or_404(id)
+        db.session.delete(dele)
+        db.session.commit()
+        return redirect('/user_approval.html')
+    except:
+        pass
+
+    return render_template("user_approval.html", users=users)

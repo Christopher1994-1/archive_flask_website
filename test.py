@@ -13,6 +13,7 @@ from flask_site import db
 # if "2" in ma:
 #     print('True')
 
+
 # mysql_pass = os.environ.get('my_thing')
 
 # fun_db = mysql.connector.connect(

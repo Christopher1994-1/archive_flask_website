@@ -37,6 +37,8 @@ class Approval(db.Model):
     a_email = db.Column(db.String(200), nullable=False)
     a_password = db.Column(db.String(200), nullable=False)
 
+    def __repr__(self):
+        return f"Approval('{self.id}', '{self.a_name}', '{self.a_address}', '{self.a_dob}', '{self.a_email}', '{self.a_password}')" 
 
 @login_manager.user_loader
 def load_user(user_id):

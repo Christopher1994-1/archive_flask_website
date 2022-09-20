@@ -72,8 +72,8 @@
                     <td>{{ user.a_address }}</td>
                     <td>{{ user.a_dob }}</td>
                     <td>{{ user.a_email }}</td>
-                    <td><button id="approve-user-btn" onclick="{{ user_approve }}">approve</button></td>
-                    <td><button id="deny-user-btn" onclick="{{ user_deny }}">deny</button></td>
+                    <td><a id ="approve-user-btn" href="{{ url_for('approve', id=user.id) }}">approve</a></td>
+                    <td><a id ="deny-user-btn" href="{{ url_for('deny', id=user.id) }}">deny</a></td>
                 </tr>
             {% endfor %}
         </tbody>
