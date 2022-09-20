@@ -12,8 +12,10 @@ from flask_site import db
 
 # if "2" in ma:
 #     print('True')
-
-
+name = "John"
+message = f"""Hello {name}\n\nYou are getting this email because your application to join family archives has been approved. You can now login in with the email and password you have provided.\n\n
+if you wish to add data to these archives you can go to the site and navigate to the add data page and go through the application."""
+print(message)
 # mysql_pass = os.environ.get('my_thing')
 
 # fun_db = mysql.connector.connect(

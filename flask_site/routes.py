@@ -259,7 +259,8 @@ def deny(id):
         db.session.commit()
         email = user_to_del.a_email
         name = user_to_del.a_name.split(' ')[0]
-        message = f"Hello {name}\nYou are getting this email because your....."
+        message = f"""Hello {name}\n\nYou are getting this email because your application to join family archives has been denied.
+                \n\nPossible Reasons:\n\nInvaild Details:\n\nNot a family member:\n\n\nIf you are a family member try again or contact owner"""
 
 
         my_pass = os.environ.get('cej_pass')
