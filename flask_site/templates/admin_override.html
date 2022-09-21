@@ -57,6 +57,13 @@
 
 <br>
 
+{% for message in get_flashed_messages() %}
+
+<div id="sign-up-alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 
 {% block content %}
 <div class="content-section">
@@ -112,8 +119,6 @@
     
     
     {% endblock content%}
-
-<a href="{{ url_for('admin_update') }}"><button type="button" class="btn btn-outline-secondary">Temp</button></a>
 
 
 

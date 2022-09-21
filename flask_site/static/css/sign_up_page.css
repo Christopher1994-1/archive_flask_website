@@ -3,6 +3,16 @@
 messed with other elements on other pages. */
 
 
+#sign-up-alert {
+  width: 1000px;
+  margin: auto;
+}
+
+#user-login-deny {
+  width: 1000px;
+  margin: auto;
+}
+
 #user-approval {
   width: 1000px;
 }

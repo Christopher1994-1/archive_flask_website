@@ -59,5 +59,10 @@ class SearchImages(FlaskForm):
     searched = StringField('Search', [validators.DataRequired()])
     submit = SubmitField('Submit')
 
-    # TODO make custom validator for searched var so user will be hit with an error if they search for something that
-    # isn't in the db
+
+# class for adding one admin user
+class AddAdmin(FlaskForm):
+    admin_email = StringField("Email", [validators.DataRequired(), validators.Email()])
+    first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('first_password')])
+    register = SubmitField("Register")

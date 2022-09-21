@@ -51,99 +51,89 @@
 
 <br>
 
+{% block content %}
 
-<div class="s-container">
-    <h1 class="s-heading">Type to Search Images</h1>
-        <form id="search-box-thing" method="POST" action="{{ url_for('search') }}">
-            <!-- <input type="text" id="search-box" name="searched" placeholder="Search {{ images.total }} images:"> -->
-                {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    {% for message in get_flashed_messages() %}
-        
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>{{ message }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    {% endfor %}
-                    
-                <div id="search-box-and-submit">
-                    <div class="form-group">
-            
-                        {% if form.searched.errors %}
-                            {{ form.searched(class="form-control form-control-lg is-invalid")}}
-                            <div class="invalid-feedback">
-                                {% for error in form.searched.errors %}
-                                    <span>{{ error }}</span>
-                                    {% endfor %}
-                                    </div>
-                        {% else %}
-                        {{ form.searched(class="images-search-box", placeholder="Search Images") }}
-                        {% endif %}
-        
-                    </div>
-        
-                    <div class="form-group">
-                
-                        {% if form.submit.errors %}
-                            {{ form.submit(class="form-control form-control-lg is-invalid")}}
-                            <div class="invalid-feedback">
-                                {% for error in form.submit.errors %}
-                                    <span>{{ error }}</span>
-                                    {% endfor %}
-                                    </div>
-                        {% else %}
-                        {{ form.submit(class="images-search-box-submit") }}
-                        {% endif %}
-                        </div>
-                    </div>
-        
-        </form>
+    {% for message in get_flashed_messages() %}
+
+    <div id="sign-up-alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
 
 
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Register</legend>
 
-        <div id="paginated-list" aria-live="polite">
-        <div class="s-image-container">
 
+                            <!-- email form field -->
+            <div class="form-group">
+                {{ form.admin_email.label(class="form-control-label") }}
 
-                {% for image in images.items %}
-                <div class="s-image" data-title="{{ image.name }}">
-                    <img class="main-image" src="{{ image.url }}" alt="{{ image.description }}">
-                    <h3>{{ image.name }}</h3>
+                {% if form.admin_email.errors %}
+                    {{ form.admin_email(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.admin_email.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ form.admin_email(class="form-control form-control-lg") }}
+                {% endif %}
                 </div>
-                {% endfor %}
- 
-                 </div>
-                 </div>
+
+
+                            <!-- first password form field -->
+            <div class="form-group">
+                {{ form.first_password.label(class="form-control-label") }}
+
+                {% if form.first_password.errors %}
+                    {{ form.first_password(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.first_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ form.first_password(class="form-control form-control-lg") }}
+                {% endif %}
+                </div>
+
+
+                            <!-- confirm password form field -->
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ form.confirm_password(class="form-control form-control-lg") }}
+                {% endif %}
+                </div>
+        </fieldset>
+        <div class="form-control">
+            {{ form.register(class="registerbtn") }}
         </div>
-
-        <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- The Close Button -->
-    <span class="close">&times;</span>
-  
-        <!-- Modal Content (The Image) -->
-    <img class="modal-content" id="img01">
-  
-        <!-- Modal Caption (Image Text) -->
-        <div id="caption"></div>
+    </form>
+    <div class="admin-login-underthing">
+        <small class="text-muted">
+            Don't Remember Your Info? <a href="#">Click Here:</a>
+        </small>
     </div>
-
-        <div id="bottom-nav">
-        {% for page_number in images.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_number %}
-                {% if images.page == page_number %}
-                    <a class="btn btn-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>
-            {% else %}
-                    <a class="btn btn-outline-info mb-4" href="{{ url_for('test', page=page_number) }}">{{ page_number }}</a>
-            {% endif %}
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}
-    </div>
+    
+</div>
 
 
+
+{% endblock content%}
 
     <script type="module" src="/static/js/search_images.js"></script>
 </body>
