@@ -99,7 +99,7 @@ def user_await(name, email):
 
 
 # route to main index home page
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def non_auth_index():
     logout_user()
     return render_template('non_auth_index.html')

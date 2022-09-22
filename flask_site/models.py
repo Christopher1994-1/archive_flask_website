@@ -54,8 +54,9 @@ class AdminInfo(db.Model, UserMixin):
 # DB for family members and all their information
 class FamilyMembers(db.Model):
     __bind_key__ = 'family_members'
-    id = db.Column(db.Integer, primary_key=False)
+    id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(200), nullable=False)
+    image = db.Column(db.Text, nullable=False) # image url
     dob = db.Column(db.String(50), nullable=False) # Date of birth
     dod = db.Column(db.String(50), nullable=False) # Date of death
     pob = db.Column(db.String(50), nullable=False) # Place of birth
@@ -71,6 +72,7 @@ class FamilyMembers(db.Model):
 # TODO add functionality to search bar in narbar
 # TODO after confident no more columns create db and test search for results
 # TODO make a way so that logged in users cannot see sign up button
+
 
 @login_manager.user_loader
 def load_user(user_id):

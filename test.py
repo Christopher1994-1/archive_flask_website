@@ -13,20 +13,20 @@ from flask_site import db
 # if "2" in ma:
 #     print('True')
 
-# mysql_pass = os.environ.get('my_thing')
+mysql_pass = os.environ.get('my_thing')
 
-# fun_db = mysql.connector.connect(
-#         host="localhost",
-#         user="root",
-#         passwd=f"{mysql_pass}",
-#     )
+fun_db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd=f"{mysql_pass}",
+    )
 
-# my_cursor = fun_db.cursor()
-# my_cursor.execute("CREATE DATABASE admin_info")
-# # for i in my_cursor.execute("SELECT * FROM images.images WHERE images.name = ?", [search]):
-# #     print(i)
+my_cursor = fun_db.cursor()
+my_cursor.execute("CREATE DATABASE family_members")
+# for i in my_cursor.execute("SELECT * FROM images.images WHERE images.name = ?", [search]):
+#     print(i)
 
-# print("No Errors")
+print("No Errors")
 
 
 # db = sqlite3.connect("passwords.db")
