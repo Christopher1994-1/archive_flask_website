@@ -55,21 +55,21 @@ class AdminInfo(db.Model, UserMixin):
 class FamilyMembers(db.Model):
     __bind_key__ = 'family_members'
     id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(200), nullable=False)
-    image = db.Column(db.Text, nullable=False) # image url
-    dob = db.Column(db.String(50), nullable=False) # Date of birth
-    dod = db.Column(db.String(50), nullable=False) # Date of death
-    pob = db.Column(db.String(50), nullable=False) # Place of birth
-    pod = db.Column(db.String(50), nullable=False) # Place of death
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
+    dob = db.Column(db.String(50), nullable=False) # dob = date of birth
+    dod = db.Column(db.String(50), nullable=True)  # dod = date of death
+    pob = db.Column(db.String(50), nullable=False) # pob = place of birth
+    pod = db.Column(db.String(50), nullable=True)  # pod = place of death
+
 
     def __repr__(self):
-        return f"('{self.id}', '{self.full_name}', '{self.dob}', '{self.dod}', '{self.pob}', '{self.pod}')"
+        return f"('{self.id}', '{self.first_name}',  '{self.last_name}', '{self.dob}', '{self.dod}', '{self.pob}', '{self.pod}')"
 
 
 # TODO think of other possible columns for db 
-# TODO make a family member 1 html page
-# TODO add search bar into search_name html
-# TODO add functionality to search bar in narbar
+# TODO add search bar into search_name.html
+# TODO add functionality to search bar in narbar that when searched searches names also images.
 # TODO after confident no more columns create db and test search for results
 # TODO make a way so that logged in users cannot see sign up button
 

@@ -403,6 +403,6 @@ def search_name():
 
 # family member page routes ***************************************
 
-app.route('/family_member_1.html')
+@app.route('/family_member_1.html')
 def family_member_1():
     return render_template('family_member_1.html')

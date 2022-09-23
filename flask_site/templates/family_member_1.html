@@ -3,15 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Family Archives - Search</title>
+    <title>Family Archives - Family Member Name</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/search_images.css">
+    <link rel="stylesheet" href="/static/css/indiv_css.css">
     <link rel="icon" href="/static/images/lighModeV.ico">
 </head>
 <body>
 
-<h1 id="main-header">Family Archives: Search</h1>
+<h1 id="main-header">Family Archives</h1>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
 <nav id="main-navbar" class="navbar navbar-expand-lg bg-dark">
@@ -50,22 +51,16 @@
 </nav>
 <br>
 
-<h1>Family Member {{ name }}:</h1>
+<h1 id="member-header">Family Member:</h1>
 
 <div id="member-container">
 
+    <img id="image-holder" src="https://res.cloudinary.com/dlu7jru3n/image/upload/v1663929046/flask_web_demo/family_member_funkns.jpg" alt="">
     
 </div>
+
+
 
     <script type="module" src="/static/js/search_images.js"></script>
 </body>
 </html>
-
-
-<nav id="main-navbar" class="navbar navbar-expand-lg bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% if user_in == True %}
-        {{ url_for('index.html') }}
-        {% else %}
-        {{ url_for('non_auth_index') }}
-    {% endif %}">Home</a>

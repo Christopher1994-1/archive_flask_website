@@ -1,0 +1,18 @@
+#member-container {
+    border: 2px solid #000;
+    width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+#image-holder {
+    border: 2px solid #000;
+    height: 100px;
+    width: 200px;
+    padding: 20px;
+}
+
+#member-header {
+    margin: auto;
+    width: 1000px;
+}
