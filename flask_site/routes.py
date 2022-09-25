@@ -1,11 +1,12 @@
 import math
+from unittest.case import doModuleCleanups
 from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
-from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures, SearchImages, AddAdmin, NavBarSearch
+from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures, SearchImages, SearchForm, FamilyForm
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_site import bcrypt, db, ALLOWED_EXTENSIONS, secure_filename
-from flask_site.models import AdminInfo, Approval, Members, Images, Documents, Approval
+from flask_site.models import AdminInfo, Approval, FamilyMembers, Members, Images, Documents, Approval
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -105,8 +106,9 @@ def non_auth_index():
     return render_template('non_auth_index.html')
 
 
+
 # route for loged in user
-@app.route("/index.html")
+@app.route("/index.html", methods=["GET", "POST"])
 @login_required
 def index():
     return render_template("index.html")
@@ -185,14 +187,14 @@ def admin_override():
     user_in2 = None
     if current_user.is_authenticated:
         user_in2 = True
-        return render_template(url_for('admin_update.html'))
+        return render_template(url_for('admin_update'))
     form = AdminLogin() # login admin form
     if form.validate_on_submit():
         user_email = form.email.data
         user = AdminInfo.query.filter(AdminInfo.admin_email==user_email).first()
         if user and bcrypt.check_password_hash(user.admin_password, form.first_password.data):
             login_user(user, remember=True)
-            return render_template("admin_update.html")
+            return render_template(url_for("admin_update"))
         else:
             flash("Login Unsuccessful. Please check your email and password!")
 
@@ -301,17 +303,7 @@ def admin_add_images():
 # Test route *****
 @app.route('/test.html', methods=["POST", "GET"])
 def test():
-    form = AddAdmin()
-    if form.validate_on_submit():
-
-            hashed_password = bcrypt.generate_password_hash(form.confirm_password.data)
-            email = form.admin_email.data
-
-            new_member = AdminInfo(admin_email=email, admin_password=hashed_password)
-
-            db.session.add(new_member)
-            db.session.commit()
-    return render_template('test.html', form=form)
+    return render_template('test.html')
 
 
 
@@ -394,16 +386,57 @@ def approve(id):
 
 # search name route
 @app.route('/search_name.html', methods=["GET", "POST"])
+@login_required
 def search_name():
-    user_input = None
-    return render_template('search_name.html')
+    search_form = SearchForm()
+    searched_data = search_form.input.data
+    if search_form.validate_on_submit():
+        user = FamilyMembers.query.filter(FamilyMembers.first_name==searched_data).first()
+        users = FamilyMembers.query.filter(FamilyMembers.last_name==searched_data).all()
+        pick = []
+        if user:
+            user=user
+            urls = user.first_name + "_" + user.last_name
+            new_url = urls.lower()
+            return render_template('search_name.html', search_form=search_form, searched_data=searched_data, user=user, new_url=new_url)
+        elif users:
+            users=users
+            for user in users:
+                user = user.first_name + "_" + user.last_name
+                pick.append(user.lower())
+            return render_template('search_name.html', search_form=search_form, searched_data=searched_data, users=users, new_url=pick)
 
 
-
+    return render_template('search_name.html', search_form=search_form, searched_data=searched_data)
 
 
 # family member page routes ***************************************
 
-@app.route('/family_member_1.html')
-def family_member_1():
-    return render_template('family_member_1.html')
+@app.route('/john_doe.html')
+@login_required
+def john_doe():
+    return render_template('john_doe.html')
+
+
+
+# add family members into family members db
+@app.route('/add_family_member.html', methods=["POST", "GET"])
+@login_required
+def add_family_member():
+    form = FamilyForm()
+    if form.validate_on_submit():
+        # add all that crap to db
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        dob = form.dob.data
+        dod = form.dod.data
+        pob = form.pob.data
+        pod = form.pod.data
+        
+        new_member = FamilyMembers(first_name=first_name, last_name=last_name, dob=dob, dod=dod, pob=pob, pod=pod)
+
+        db.session.add(new_member)
+        db.session.commit()
+        return redirect(url_for('add_family_member', form=form))
+
+    return render_template('add_family_member.html', form=form)

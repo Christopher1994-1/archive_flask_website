@@ -118,3 +118,78 @@ a:link{
     text-decoration: none;
 }
 
+.search-page-btn {
+    text-decoration: none;
+    color: white;
+}
+
+
+
+/* search page main div  */
+#search-form-search-page {
+    width: 1000px;
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+}
+
+
+
+/* search below text on search page */
+#search-form-search-page .pop {
+    text-decoration: underline;
+    font-size: 45px;
+}
+
+
+
+/* search div hr line */
+#search-form-search-page hr {
+    width: 400px;
+    margin: auto;
+    padding: 5px;
+}
+
+
+/* search page search box */
+#search-form-search-page .search-input-search-name {
+    width: 500px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+
+/* search page submit button */
+#search-form-search-page .search-register-btn {
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#search-form-search-page .search-register-btn:hover {
+    background-color: #000;
+    color: crimson;
+}
+
+
+/* #################################################################################### */
+/* search_name page */
+
+
+.searched-data-stuff {
+    border: 2px solid #000;
+    width: 1000px;
+    margin: auto;
+    padding: 10px;
+}
+
+.searched-data-stuff .searched-data-header {
+    text-align: center;
+}
+
+.searched-data-stuff .searched-data-url {
+    font-size: 20px;
+    text-decoration: underline;
+}

@@ -1,4 +1,5 @@
 from genericpath import exists
+from logging import PlaceHolder
 from math import remainder
 from xml.dom import ValidationErr
 from xmlrpc.client import Boolean
@@ -68,7 +69,18 @@ class AddAdmin(FlaskForm):
     register = SubmitField("Register")
 
 
-# class for navbar search form
-class NavBarSearch(FlaskForm):
-    input = StringField("Search", [validators.DataRequired()])
-    submit = SubmitField("Search")
+# class for searching db names
+class SearchForm(FlaskForm):
+    input = StringField('Search', [validators.DataRequired()], render_kw={"placeholder": "Search"})
+    submit = SubmitField('Submit')
+
+
+# class for updating/adding family members
+class FamilyForm(FlaskForm):
+    first_name = StringField("First Name:", [validators.DataRequired()])
+    last_name = StringField("Last Name:", [validators.DataRequired()])
+    dob = StringField("Date of Birth:", [validators.DataRequired()])
+    dod = StringField("Date of Death:", [validators.DataRequired()])
+    pob = StringField("Place of Birth:", [validators.DataRequired()])
+    pod = StringField("Place of Death:", [validators.DataRequired()])
+    submit = SubmitField('Submit')

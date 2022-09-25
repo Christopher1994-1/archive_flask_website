@@ -42,10 +42,7 @@
                     </ul>
 
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button id="nav-bar-btn" class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <h5><a href="{{ url_for('search_name') }}" class="search-page-btn">Search</a></h5>
         </div>
     </div>
 </nav>
@@ -64,6 +61,10 @@
 
     <h3 class="admin-headers">Change Users:</h3>
     <a href="#"><button type="button" class="btn btn-outline-primary">Edit</button></a>
+    <hr>
+
+    <h3 class="admin-headers">Add Family DB:</h3>
+    <a href="{{ url_for('add_family_member') }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
     <hr>
 
     <h3 class="admin-headers">Approve Users:</h3>

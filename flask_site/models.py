@@ -67,12 +67,6 @@ class FamilyMembers(db.Model):
         return f"('{self.id}', '{self.first_name}',  '{self.last_name}', '{self.dob}', '{self.dod}', '{self.pob}', '{self.pod}')"
 
 
-# TODO think of other possible columns for db 
-# TODO add search bar into search_name.html
-# TODO add functionality to search bar in narbar that when searched searches names also images.
-# TODO after confident no more columns create db and test search for results
-# TODO make a way so that logged in users cannot see sign up button
-
 
 @login_manager.user_loader
 def load_user(user_id):

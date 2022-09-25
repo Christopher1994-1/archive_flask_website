@@ -41,15 +41,72 @@
                     </ul>
 
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button id="nav-bar-btn" class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <h5><a href="{{ url_for('search_name') }}" class="search-page-btn">Search</a></h5>
         </div>
     </div>
 </nav>
 <br>
 
+{% for message in get_flashed_messages() %}
+
+<div id="user-login-deny" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+<div id="search-form-search-page">
+    
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ search_form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="pop">Search Below</legend>
+            <hr>
+
+            <!-- admin email login form field -->
+            <div class="form-group">
+                {% if search_form.input.errors %}
+                    {{ search_form.input(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in search_form.input.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                {% else %}
+                {{ search_form.input(class="search-input-search-name") }}
+                {% endif %}
+                </div>
+
+            <div>
+                {{ search_form.submit(class="search-register-btn") }}
+            </div>
+</div>
+
+</div>
+
+
+{% if searched_data %}
+    <div class="searched-data-stuff">
+
+        <h1 class="searched-data-header">:Search results for {{ searched_data }}:</h1>
+            {% if user %}
+            <ul>
+                <li><a class="searched-data-url" href="{{ url_for(new_url) }}">{{ user.first_name + " " + user.last_name }}</a></li>
+            </ul>
+            {% else %}
+        {% for user in users %}
+        <ul>
+            <li><a class="searched-data-url" href="
+                {% for thing in pick %}
+                    {{ url_for(thing) }}
+                    {% endfor %}">{{ user.first_name + " " + user.last_name }}</a></li>
+        </ul>
+        {% endfor %}
+        {% endif %}
+    </div>
+{% endif %}
 
     <script type="module" src="/static/js/search_images.js"></script>
 </body>
