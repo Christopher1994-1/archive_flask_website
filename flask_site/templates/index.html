@@ -44,8 +44,8 @@
                     </ul>
 
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form method="POST" class="d-flex" action="{{ url_for('search_name') }}">
+                <input name="user_search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button id="nav-bar-btn" class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

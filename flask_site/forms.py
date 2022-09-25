@@ -66,3 +66,9 @@ class AddAdmin(FlaskForm):
     first_password = PasswordField("Password:", validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('first_password')])
     register = SubmitField("Register")
+
+
+# class for navbar search form
+class NavBarSearch(FlaskForm):
+    input = StringField("Search", [validators.DataRequired()])
+    submit = SubmitField("Search")

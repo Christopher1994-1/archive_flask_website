@@ -1,6 +1,6 @@
 import math
 from flask import Flask, render_template, redirect, request, flash, url_for, send_from_directory
-from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures, SearchImages, AddAdmin
+from flask_site.forms import AddingImages, RegistrationForm, LoginForm, AdminLogin, AddingPictures, SearchImages, AddAdmin, NavBarSearch
 from flask_site import app
 import os
 from flask_login import login_user, current_user, logout_user, login_required
@@ -393,8 +393,9 @@ def approve(id):
 
 
 # search name route
-@app.route('/search_name.html')
+@app.route('/search_name.html', methods=["GET", "POST"])
 def search_name():
+    user_input = None
     return render_template('search_name.html')
 
 
