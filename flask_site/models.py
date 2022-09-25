@@ -66,6 +66,7 @@ class FamilyMembers(db.Model):
     def __repr__(self):
         return f"('{self.id}', '{self.first_name}',  '{self.last_name}', '{self.dob}', '{self.dod}', '{self.pob}', '{self.pod}')"
 
+# TODO look up forgetting user login stuff
 
 
 @login_manager.user_loader
