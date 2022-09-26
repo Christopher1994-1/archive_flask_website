@@ -440,3 +440,17 @@ def add_family_member():
         return redirect(url_for('add_family_member', form=form))
 
     return render_template('add_family_member.html', form=form)
+
+
+# ******************************************************************************
+# custom error pages
+
+# Invalid URL
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html')
+
+# Internal Error
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template('500.html')
